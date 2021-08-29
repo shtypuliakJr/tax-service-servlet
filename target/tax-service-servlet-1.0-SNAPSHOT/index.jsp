@@ -72,9 +72,5 @@
     </label>
     <input type="submit"/>
 </form>
-
-<%
-    out.println(session.getAttribute("lang"));
-%>
 </body>
 </html>
