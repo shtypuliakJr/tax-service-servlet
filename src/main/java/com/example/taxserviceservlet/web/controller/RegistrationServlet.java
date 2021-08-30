@@ -4,6 +4,7 @@ import com.example.taxserviceservlet.exception.UserAlreadyExistsException;
 import com.example.taxserviceservlet.service.RegistrationService;
 import com.example.taxserviceservlet.web.dto.UserDTO;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +30,7 @@ public class RegistrationServlet extends HttpServlet {
 
     }
 
-    private void processRegistration(HttpServletRequest req, HttpServletResponse resp) {
+    private void processRegistration(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         UserDTO userDTO = new UserDTO.Builder()
                 .firstName(req.getParameter("firstName"))
@@ -45,10 +46,11 @@ public class RegistrationServlet extends HttpServlet {
         System.out.println("UserDTO " + userDTO);
         try {
             registrationService.registerUser(userDTO);
-
+            req.getRequestDispatcher("login.jsp").forward(req, resp);
         } catch (UserAlreadyExistsException e) {
             System.out.println("exception in servlet");
-            req.setAttribute("error", e.getMessage());
+            req.setAttribute("errorUserExists", e.getMessage());
+            req.getRequestDispatcher("registration.jsp").forward(req, resp);
         } catch (SQLException throwable) {
             req.setAttribute("error", "Exception with db");
         }

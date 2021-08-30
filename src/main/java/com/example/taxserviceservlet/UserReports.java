@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-@WebServlet(name = "user/reports", value = "/user/reports")
+//@WebServlet(name = "user/reports", value = "/user/reports")
 public class UserReports extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

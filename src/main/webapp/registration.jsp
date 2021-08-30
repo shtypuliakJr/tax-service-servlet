@@ -111,7 +111,7 @@
                             <fmt:message key="registration.data.register"/>
                         </button>
                     </div>
-                    <c:if test="${not empty userExistMessage}">
+                    <c:if test="${requestScope.errorUserExists}">
                         <div class="alert alert-error">
                             <div class="alert alert-danger" role="alert">
                                 <div style="text-align: center" class="error-invalid">
@@ -119,7 +119,7 @@
                                 </div>
                             </div>
                         </div>
-                        <c:out value="${errorMessage}"/>
+                        <c:out value="${requestScope.errorUserExists}"/>
                     </c:if>
 
                     <br/>

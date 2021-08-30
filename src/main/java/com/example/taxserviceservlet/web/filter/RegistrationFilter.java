@@ -15,10 +15,7 @@ public class RegistrationFilter implements Filter {
         AtomicBoolean isParamCorrect = new AtomicBoolean(true);
         servletRequest.getParameterMap().forEach((k, v) -> {
             if (v[0].equals("")) {
-                System.out.println("filtered " + k);
                 isParamCorrect.set(false);
-            } else {
-                System.out.println("Param norm " + k + " " + v[0]);
             }
         });
 

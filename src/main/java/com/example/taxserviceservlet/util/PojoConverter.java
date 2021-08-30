@@ -35,7 +35,7 @@ public class PojoConverter {
                 .dateOfRegistration(user.getDateOfRegistration())
                 .address(user.getAddress())
                 .personality(user.getPersonality().toString())
-                .userId(user.getId())
+                .userId(user.getUserId())
                 .build();
     }
 }

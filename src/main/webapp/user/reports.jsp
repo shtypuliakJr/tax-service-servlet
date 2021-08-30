@@ -8,10 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>User Reports</title>
+    <title>User Page</title>
 </head>
 <body>
 <p>Reports</p>
 <a href="user/reports-view"></a>
+<%= session.getAttribute("user") %>
 </body>
 </html>

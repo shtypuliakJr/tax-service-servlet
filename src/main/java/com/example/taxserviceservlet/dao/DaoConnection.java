@@ -27,15 +27,8 @@ public class DaoConnection {
                 Class.forName(datasourceDriver).getDeclaredConstructor().newInstance();
 
                 connection = DriverManager.getConnection(datasourceUrl, datasourceUsername, datasourcePassword);
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (ClassNotFoundException | SQLException | NoSuchMethodException |
+                    IllegalAccessException | InstantiationException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }

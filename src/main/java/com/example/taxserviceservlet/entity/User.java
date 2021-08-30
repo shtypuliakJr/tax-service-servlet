@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class User {
 
-    private Long id;
+    private Long userId;
 
     private String firstName;
 
@@ -25,8 +25,6 @@ public class User {
 
     private Date dateOfRegistration;
 
-    private Long userId;
-
     private UserRole userRole;
 
     public static class Builder {
@@ -35,6 +33,11 @@ public class User {
 
         public Builder() {
             user = new User();
+        }
+
+        public User.Builder userId(Long userId) {
+            this.user.userId = userId;
+            return this;
         }
 
         public User.Builder firstName(String firstName) {
@@ -90,14 +93,6 @@ public class User {
         public User build() {
             return this.user;
         }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -191,7 +186,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
@@ -201,7 +196,6 @@ public class User {
                 ", personality=" + personality +
                 ", address='" + address + '\'' +
                 ", dateOfRegistration=" + dateOfRegistration +
-                ", userId=" + userId +
                 ", userRole=" + userRole +
                 '}';
     }
