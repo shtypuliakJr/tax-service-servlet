@@ -1,5 +1,7 @@
 package com.example.taxserviceservlet.web.controller;
 
+import com.example.taxserviceservlet.exception.UserAlreadyExistsException;
+import com.example.taxserviceservlet.service.RegistrationService;
 import com.example.taxserviceservlet.web.dto.UserDTO;
 
 import javax.servlet.ServletException;
@@ -8,10 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
+import java.sql.SQLException;
 
 @WebServlet(name = "RegistrationServlet", value = "/registration")
 public class RegistrationServlet extends HttpServlet {
+
+    RegistrationService registrationService = new RegistrationService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -20,6 +24,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         processRegistration(req, resp);
 
     }
@@ -27,28 +32,25 @@ public class RegistrationServlet extends HttpServlet {
     private void processRegistration(HttpServletRequest req, HttpServletResponse resp) {
 
         UserDTO userDTO = new UserDTO.Builder()
-                .setFirstName(req.getParameter("firstName"))
-                .setLastName(req.getParameter("lastName"))
-                .setEmail(req.getParameter("email"))
-                .setPassword(req.getParameter("password"))
-                .setAge(req.getParameter("age"))
-                .setIPN(req.getParameter("ipn"))
-                .setPersonality(req.getParameter("personality"))
-                .setAddress(req.getParameter("address"))
+                .firstName(req.getParameter("firstName"))
+                .lastName(req.getParameter("lastName"))
+                .email(req.getParameter("email"))
+                .password(req.getParameter("password"))
+                .age(req.getParameter("age"))
+                .ipn(req.getParameter("ipn"))
+                .personality(req.getParameter("personality"))
+                .address(req.getParameter("address"))
                 .build();
 
-        System.out.println("Params " + userDTO);
-//        req.getParameterMap().forEach((k, v) -> {
-//
-//        });
-//
-//        req.getParameterMap().forEach((k, v) -> {
-//            System.out.println(k + " = " + v[0]);
-//        });
+        System.out.println("UserDTO " + userDTO);
+        try {
+            registrationService.registerUser(userDTO);
 
-        System.out.println();
-
-
-
+        } catch (UserAlreadyExistsException e) {
+            System.out.println("exception in servlet");
+            req.setAttribute("error", e.getMessage());
+        } catch (SQLException throwable) {
+            req.setAttribute("error", "Exception with db");
+        }
     }
 }

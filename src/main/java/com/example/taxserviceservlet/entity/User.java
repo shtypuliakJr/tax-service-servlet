@@ -1,8 +1,11 @@
-package com.example.taxserviceservlet.web.dto;
+package com.example.taxserviceservlet.entity;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
-public class UserDTO {
+public class User {
+
+    private Long id;
 
     private String firstName;
 
@@ -12,11 +15,11 @@ public class UserDTO {
 
     private String password;
 
-    private String age;
+    private Integer age;
 
     private String ipn;
 
-    private String personality;
+    private Personality personality;
 
     private String address;
 
@@ -24,75 +27,78 @@ public class UserDTO {
 
     private Long userId;
 
-    private String userRole;
+    private UserRole userRole;
 
     public static class Builder {
 
-        private UserDTO userDTO;
+        private User user;
 
         public Builder() {
-            userDTO = new UserDTO();
+            user = new User();
         }
 
-        public Builder firstName(String firstName) {
-            this.userDTO.firstName = firstName;
+        public User.Builder firstName(String firstName) {
+            this.user.firstName = firstName;
             return this;
         }
 
-        public Builder lastName(String lastName) {
-            this.userDTO.lastName = lastName;
+        public User.Builder lastName(String lastName) {
+            this.user.lastName = lastName;
             return this;
         }
 
-        public Builder email(String email) {
-            this.userDTO.email = email;
+        public User.Builder email(String email) {
+            this.user.email = email;
             return this;
         }
 
-        public Builder password(String password) {
-            this.userDTO.password = password;
+        public User.Builder password(String password) {
+            this.user.password = password;
             return this;
         }
 
-        public Builder age(String age) {
-            this.userDTO.age = age;
+        public User.Builder age(Integer age) {
+            this.user.age = age;
             return this;
         }
 
-        public Builder ipn(String ipn) {
-            this.userDTO.ipn = ipn;
+        public User.Builder ipn(String ipn) {
+            this.user.ipn = ipn;
             return this;
         }
 
-        public Builder dateOfRegistration(Date dateOfRegistration) {
-            this.userDTO.dateOfRegistration = dateOfRegistration;
+        public User.Builder personality(Personality personality) {
+            this.user.personality = personality;
             return this;
         }
 
-        public Builder personality(String personality) {
-            this.userDTO.personality = personality;
+        public User.Builder address(String address) {
+            this.user.address = address;
             return this;
         }
 
-        public Builder address(String address) {
-            this.userDTO.address = address;
+        public User.Builder dateOfRegistration(Date dateOfRegistration) {
+            this.user.dateOfRegistration = dateOfRegistration;
             return this;
         }
 
-        public Builder userId(Long userId) {
-            this.userDTO.userId = userId;
+        public User.Builder userRole(UserRole userRole) {
+            this.user.userRole = userRole;
             return this;
         }
 
-        public Builder userRole(String userRole) {
-            this.userDTO.userRole = userRole;
-            return this;
-        }
-        public UserDTO build() {
-            return this.userDTO;
+        public User build() {
+            return this.user;
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -126,11 +132,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -142,11 +148,11 @@ public class UserDTO {
         this.ipn = ipn;
     }
 
-    public String getPersonality() {
+    public Personality getPersonality() {
         return personality;
     }
 
-    public void setPersonality(String personality) {
+    public void setPersonality(Personality personality) {
         this.personality = personality;
     }
 
@@ -174,28 +180,29 @@ public class UserDTO {
         this.userId = userId;
     }
 
-    public String getUserRole() {
+    public UserRole getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(String userRole) {
+    public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-                "firstName='" + firstName + '\'' +
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", age='" + age + '\'' +
+                ", age=" + age +
                 ", ipn='" + ipn + '\'' +
-                ", personality='" + personality + '\'' +
+                ", personality=" + personality +
                 ", address='" + address + '\'' +
                 ", dateOfRegistration=" + dateOfRegistration +
                 ", userId=" + userId +
-                ", userRole='" + userRole + '\'' +
+                ", userRole=" + userRole +
                 '}';
     }
 }
