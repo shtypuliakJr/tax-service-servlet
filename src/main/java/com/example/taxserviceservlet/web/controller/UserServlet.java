@@ -1,5 +1,7 @@
 package com.example.taxserviceservlet.web.controller;
 
+import com.example.taxserviceservlet.entity.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,8 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("reports.jsp").forward(req, resp);
+        User user = (User) req.getSession().getAttribute("user");
+        System.out.println(user);
     }
 
 

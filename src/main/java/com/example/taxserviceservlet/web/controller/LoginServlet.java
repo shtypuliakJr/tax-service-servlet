@@ -44,10 +44,6 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("inspector");
                 resp.sendRedirect("inspector/reports");
             }
-//            req.getRequestDispatcher("user/reports.jsp").forward(req, resp);
-//            session.setAttribute("email", email);
-//            session.setAttribute("userRole", String.valueOf(user.getUserRole()));
-
         } catch (WrongPasswordException | NoUserFoundException e) {
             req.setAttribute("exception", e.getMessage());
             req.getRequestDispatcher("login.jsp").forward(req, resp);

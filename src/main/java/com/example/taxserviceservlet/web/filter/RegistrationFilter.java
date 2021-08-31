@@ -23,13 +23,7 @@ public class RegistrationFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         else {
             servletRequest.getParameterMap().forEach(servletRequest::setAttribute);
-            RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/registration.jsp");
-
-            try {
-                requestDispatcher.forward(servletRequest, servletResponse);
-            } catch (ServletException | IOException e) {
-                e.printStackTrace();
-            }
+            servletRequest.getRequestDispatcher("/registration.jsp").forward(servletRequest, servletResponse);
         }
     }
 }
