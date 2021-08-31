@@ -11,6 +11,14 @@ import java.util.Optional;
 public class UserService {
 
     UserDao userDao = new UserDao();
+    private static UserService userService;
+
+    public static UserService getInstance() {
+        if (userService == null) {
+            userService = new UserService();
+        }
+        return userService;
+    }
 
     public User checkUserCredentials(String email, String password)
             throws WrongPasswordException, NoUserFoundException {
