@@ -30,9 +30,6 @@ public class RoleFilter implements Filter {
                     filterChain.doFilter(servletRequest, servletResponse);
                 else if (requestURI.contains("/user/"))
                     request.getRequestDispatcher("/error/error.jsp").forward(servletRequest, servletResponse);
-//
-//                System.out.println("contain inspector");
-//                filterChain.doFilter(servletRequest, servletResponse);
             }
         }
         request.getRequestDispatcher("/error/error.jsp").forward(servletRequest, servletResponse);

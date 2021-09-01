@@ -10,16 +10,19 @@ public class CommandUtility {
 
 //    public static boolean checkUserIsLogged(HttpServletRequest request, String email) {
 //
-//        ServletContext servletContext = request.getSession().getServletContext();
-//
-//        HashSet<User> loggedUsers = (HashSet<User>) servletContext.getAttribute("loggedUsers");
-//
-//        if (loggedUsers.stream().anyMatch(email::equals)) {
-//            return true;
-//        }
-//        loggedUsers.add(email);
-//        servletContext.setAttribute("loggedUsers", loggedUsers);
-//        return false;
+////        ServletContext servletContext = request.getSession().getServletContext();
+////
+////        HashSet<User> loggedUsers = (HashSet<User>) servletContext.getAttribute("loggedUsers");
+////
+////        if (loggedUsers.stream().anyMatch(email::equals)) {
+////            return true;
+////        }
+////        loggedUsers.add(email);
+////        servletContext.setAttribute("loggedUsers", loggedUsers);
+////        return false;
 //    }
 
+    public static void addUserToUserContext(User user) {
+        //todo check if logged in
+    }
 }

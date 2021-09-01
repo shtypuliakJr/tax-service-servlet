@@ -11,6 +11,14 @@ import java.sql.SQLException;
 public class RegistrationService {
 
     private UserDao userDao = new UserDao();
+    private static RegistrationService registrationService;
+
+    public static RegistrationService getInstance() {
+        if (registrationService == null) {
+            registrationService = new RegistrationService();
+        }
+        return registrationService;
+    }
 
     public User registerUser(UserDTO userDTO) throws SQLException {
         if (userDao.existsByEmail(userDTO.getEmail())) {

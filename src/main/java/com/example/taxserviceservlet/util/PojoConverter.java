@@ -25,7 +25,7 @@ public class PojoConverter {
     }
 
     public static UserDTO convertUserEntityToDto(User user) {
-        return new UserDTO.Builder()
+        return UserDTO.Builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())

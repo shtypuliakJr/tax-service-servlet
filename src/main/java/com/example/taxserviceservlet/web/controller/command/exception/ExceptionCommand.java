@@ -9,6 +9,6 @@ public class ExceptionCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
-        return "error";
+        return "error/error";
     }
 }
