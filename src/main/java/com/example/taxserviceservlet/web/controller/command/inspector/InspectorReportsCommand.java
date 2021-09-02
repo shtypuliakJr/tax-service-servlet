@@ -1,9 +1,17 @@
 package com.example.taxserviceservlet.web.controller.command.inspector;
 
+import com.example.taxserviceservlet.entity.Status;
+import com.example.taxserviceservlet.entity.TaxPeriod;
+import com.example.taxserviceservlet.exception.NoReportsFoundException;
 import com.example.taxserviceservlet.service.InspectorService;
 import com.example.taxserviceservlet.web.controller.command.Command;
+import com.example.taxserviceservlet.web.dto.ReportDTO;
+import com.example.taxserviceservlet.web.dto.SortField;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
+import java.util.List;
+import java.util.Optional;
 
 public class InspectorReportsCommand implements Command {
 
@@ -23,6 +31,51 @@ public class InspectorReportsCommand implements Command {
 
     public String reportsGet(HttpServletRequest request) {
 
+        Long id = null;
+        Date date = null;
+        TaxPeriod period = null;
+        Status status = null;
+        SortField sortBy = null;
+
+        String idParam = request.getParameter("userId");
+        String dateParam = request.getParameter("date");
+        String periodParam = request.getParameter("period");
+        String statusParam = request.getParameter("status");
+        String sortByParam = request.getParameter("sortBy");
+
+        System.out.println("userId " + idParam + " " + (idParam == null));
+        System.out.println("date " + dateParam + " " + (dateParam == null));
+        System.out.println("period " + periodParam + " " + (periodParam == null));
+        System.out.println("status " + statusParam + " " + (statusParam == null));
+        System.out.println("sortBy " + sortByParam + " " + (sortByParam == null));
+
+        if (!(idParam == null || idParam.isEmpty())) {
+            id = Long.valueOf(idParam);
+        }
+        if (!(dateParam == null || dateParam.isEmpty())) {
+            date = Date.valueOf(dateParam);
+        }
+        if (!(periodParam == null || periodParam.isEmpty())) {
+            period = TaxPeriod.valueOf(periodParam);
+        }
+        if (!(statusParam == null || statusParam.isEmpty())) {
+            status = Status.valueOf(statusParam);
+        }
+        if (!(sortByParam == null || sortByParam.isEmpty())) {
+            sortBy = SortField.valueOf(sortByParam);
+        }
+
+        System.out.println("userId " + id);
+        System.out.println("date " + date);
+        System.out.println("period " + period);
+        System.out.println("status " + status);
+        System.out.println("sortBy " + sortBy);
+        try {
+            request.setAttribute("reports", inspectorService
+                    .getReportsByFilterParam(id, date, period, status, sortBy));
+        } catch (NoReportsFoundException e) {
+            request.setAttribute("noReportsFound", e.getMessage());
+        }
         return "/inspector/reports";
     }
 
@@ -31,4 +84,11 @@ public class InspectorReportsCommand implements Command {
         return "/inspector/reports";
     }
 
+
+//    private <T> T getParamValue(String param, Class<T> tClass) throws ClassNotFoundException, NoSuchMethodException {
+//        if (param != null) {
+//            return (T) tClass.getMethod("valueOf", Class.forName(param));
+//        }
+//        return null;
+//    }
 }

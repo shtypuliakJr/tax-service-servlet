@@ -1,7 +1,7 @@
 package com.example.taxserviceservlet.util;
 
-import com.example.taxserviceservlet.entity.Personality;
-import com.example.taxserviceservlet.entity.User;
+import com.example.taxserviceservlet.entity.*;
+import com.example.taxserviceservlet.web.dto.ReportDTO;
 import com.example.taxserviceservlet.web.dto.UserDTO;
 
 import java.sql.Date;
@@ -36,6 +36,20 @@ public class PojoConverter {
                 .address(user.getAddress())
                 .personality(user.getPersonality().toString())
                 .userId(user.getUserId())
+                .build();
+    }
+
+    public static ReportDTO convertReportEntityToDTO(Report report) {
+        return new ReportDTO.Builder()
+                .id(report.getId())
+                .income(report.getIncome())
+                .taxRate(report.getTaxRate())
+                .taxPeriod(report.getTaxPeriod())
+                .year(report.getYear())
+                .status(report.getStatus())
+                .reportDate(report.getReportDate())
+                .comment(report.getComment())
+                .userId(report.getUserId())
                 .build();
     }
 }

@@ -48,7 +48,7 @@
     <div class="row">
         <div class="col-4">
             <div class="input-group">
-                <form action="inspector/search" method="GET">
+                <form action="search" method="GET">
                     <div class="d-flex flex-row">
                         <input id="search" name="search" value="${search}"
                                class="form-control rounded" placeholder="Enter id, ipn, name, surname"
@@ -60,20 +60,22 @@
         </div>
 
         <div class="col-8">
-            <form action="inspector/reports" method="GET">
+            <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
                 <label for="date">
                     Select date:
                     <input type="date" id="date" name="date" min="2010-01-01" max="2021-12-31"/>
                 </label>
-<%--                <select id="period" name="period" class="form-select" aria-label="Default select example">--%>
-<%--                    <option selected value="">Select period</option>--%>
+                <select id="period" name="period" class="form-select" aria-label="Default select example">
+                    <option selected value="">Select period</option>
+                    <option label="First period" value="FIRST_PERIOD"></option>
+                    <option label="Second period" value="SECOND_PERIOD"></option>
 <%--                    <option th:each="period : ${T(com.taxserviceapp.data.entity.TaxPeriod).values()}"--%>
 <%--                            th:text="${period.getPeriod()}"--%>
 <%--                            th:value="${period.name()}"--%>
 <%--                            th:selected="${period} == ${lastSelectedPeriod}">--%>
 <%--                        ..--%>
 <%--                    </option>--%>
-<%--                </select>--%>
+                </select>
 
 <%--                <select id="status" name="status" class="form-select" aria-label="Default select example">--%>
 <%--                    <option selected value="">Select status</option>--%>
@@ -117,6 +119,8 @@
             </thead>
 
             <tbody>
+<%--            ${requestScope.get("reports")}--%>
+            ${requestScope.reports}
 <%--            <tr>--%>
 <%--                <td class="text-center" colspan="9">--%>
 <%--                    <div th:if="${errorNoResult != null}" th:text="${errorNoResult}">--%>

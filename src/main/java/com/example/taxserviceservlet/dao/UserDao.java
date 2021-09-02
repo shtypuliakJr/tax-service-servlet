@@ -14,7 +14,6 @@ import java.util.Optional;
 
 public class UserDao implements Crud<User, Long> {
 
-
     @Override
     public Optional<User> findById(Long id) {
         String findById = "SELECT * FROM user WHERE id = ?";
