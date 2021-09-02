@@ -11,7 +11,7 @@ import com.example.taxserviceservlet.web.dto.SortField;
 import com.example.taxserviceservlet.web.dto.StatisticDTO;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,14 +34,15 @@ public class InspectorService {
 
         try {
             reportList = reportsDao.findByParam(id, reportDate, period, status, sortField);
-            System.out.println("after dao");
+            System.out.println("Report list in service: " + reportList);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        if (reportList == null || reportList.isEmpty())
+        if (reportList == null || reportList.isEmpty()) {
+            System.out.println("Report list = " + reportList);
             throw new NoReportsFoundException("No reports found");
-
+        }
         System.out.println(reportList);
         return reportList.stream()
                 .map(PojoConverter::convertReportEntityToDTO)

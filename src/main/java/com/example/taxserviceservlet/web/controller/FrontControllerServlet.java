@@ -43,31 +43,23 @@ public class FrontControllerServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        if (request.getParameter("redirect") != null) {
-            response.sendRedirect(request.getParameter("redirect"));
-            return;
-        }
+//        if (request.getParameter("redirect") != null) {
+//            response.sendRedirect(request.getParameter("redirect"));
+//            return;
+//        }
         String path = request.getRequestURI().replaceFirst("/tax_service_servlet_war_exploded/", "");
-        System.out.println("Path " + path);
-        System.out.println("Date" + request.getParameter("date"));
-        System.out.println("Period" + request.getParameter("period"));
 
-        Command command = commands.getOrDefault(path.trim(), (c) -> "error404");
+        Command command = commands.getOrDefault(path.trim(), (c) -> "/error/error404");
         String page = "/error";
 
         try {
-            System.out.println("before execute");
             page = command.execute(request);
         } catch (Exception exception) {
-            request.setAttribute("errorMessage", exception.getMessage());
+            request.setAttribute("exception", exception.getMessage());
         }
-        System.out.println("Page " + page);
         if (page.contains("redirect")) {
-            System.out.println("redirect");
             response.sendRedirect(page.replace("redirect:", "/tax_service_servlet_war_exploded"));
         } else {
-            System.out.println("request dispatcher");
-            System.out.println("Final page " + page + ".jsp");
             request.getRequestDispatcher(page + ".jsp").forward(request, response);
         }
     }

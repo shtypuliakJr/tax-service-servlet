@@ -4,6 +4,7 @@ import com.example.taxserviceservlet.entity.Report;
 import com.example.taxserviceservlet.entity.Status;
 import com.example.taxserviceservlet.entity.TaxPeriod;
 import com.example.taxserviceservlet.entity.User;
+import com.example.taxserviceservlet.util.PojoConverter;
 
 import java.sql.Date;
 
@@ -26,6 +27,8 @@ public class ReportDTO {
     private String comment;
 
     private Long userId;
+    
+    private UserDTO userDTO;
 
     public static class Builder {
 
@@ -77,10 +80,94 @@ public class ReportDTO {
             this.report.userId = userId;
             return this;
         }
+        public ReportDTO.Builder user(UserDTO user) {
+            this.report.userDTO = user;
+            return this;
+        }
         public ReportDTO build() {
             return this.report;
         }
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getIncome() {
+        return income;
+    }
+
+    public void setIncome(Integer income) {
+        this.income = income;
+    }
+
+    public Integer getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(Integer taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public String getTaxPeriod() {
+        return taxPeriod;
+    }
+
+    public void setTaxPeriod(String taxPeriod) {
+        this.taxPeriod = taxPeriod;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Date getReportDate() {
+        return reportDate;
+    }
+
+    public void setReportDate(Date reportDate) {
+        this.reportDate = reportDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public UserDTO getUserDTO() {
+        return userDTO;
+    }
+
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     @Override
@@ -95,6 +182,7 @@ public class ReportDTO {
                 ", status='" + status + '\'' +
                 ", comment='" + comment + '\'' +
                 ", userId=" + userId +
+                ", userDTO=" + userDTO +
                 '}';
     }
 }

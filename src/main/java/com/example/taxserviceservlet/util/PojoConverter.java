@@ -11,17 +11,17 @@ public class PojoConverter {
 
     public static User convertUserDtoToEntity(UserDTO userDTO) {
 
-            return new User.Builder()
-                    .firstName(userDTO.getFirstName())
-                    .lastName(userDTO.getLastName())
-                    .email(userDTO.getEmail())
-                    .password(userDTO.getPassword())
-                    .age(Integer.parseInt(userDTO.getAge()))
-                    .address(userDTO.getAddress())
-                    .ipn(userDTO.getIpn())
-                    .dateOfRegistration(userDTO.getDateOfRegistration())
-                    .personality(Personality.valueOf(userDTO.getPersonality()))
-                    .build();
+        return new User.Builder()
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .email(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .age(Integer.parseInt(userDTO.getAge()))
+                .address(userDTO.getAddress())
+                .ipn(userDTO.getIpn())
+                .dateOfRegistration(userDTO.getDateOfRegistration())
+                .personality(Personality.valueOf(userDTO.getPersonality()))
+                .build();
     }
 
     public static UserDTO convertUserEntityToDto(User user) {
@@ -34,7 +34,7 @@ public class PojoConverter {
                 .ipn(user.getIpn())
                 .dateOfRegistration(user.getDateOfRegistration())
                 .address(user.getAddress())
-                .personality(user.getPersonality().toString())
+                .personality(String.valueOf(user.getPersonality()))
                 .userId(user.getUserId())
                 .build();
     }
@@ -50,6 +50,21 @@ public class PojoConverter {
                 .reportDate(report.getReportDate())
                 .comment(report.getComment())
                 .userId(report.getUserId())
+                .user(PojoConverter.convertUserEntityToDto(report.getUser()))
+                .build();
+    }
+
+    public static Report convertReportDTOToEntity(ReportDTO reportDTO) {
+        return new Report.Builder()
+                .id(reportDTO.getId())
+                .income(reportDTO.getIncome())
+                .taxRate(reportDTO.getTaxRate())
+                .taxPeriod(TaxPeriod.valueOf(reportDTO.getTaxPeriod()))
+                .year(reportDTO.getYear())
+                .status(Status.valueOf(reportDTO.getStatus()))
+                .reportDate(reportDTO.getReportDate())
+                .comment(reportDTO.getComment())
+                .userId(reportDTO.getUserId())
                 .build();
     }
 }

@@ -22,6 +22,7 @@ public class Report {
 
     private Long userId;
 
+    private User user;
 
     public static class Builder {
 
@@ -73,6 +74,11 @@ public class Report {
             this.report.userId = userId;
             return this;
         }
+        public Builder user(User user) {
+            this.report.user = user;
+            return this;
+        }
+
         public Report build() {
             return this.report;
         }
@@ -151,6 +157,14 @@ public class Report {
         this.userId = userId;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Report{" +
@@ -163,6 +177,7 @@ public class Report {
                 ", status=" + status +
                 ", comment='" + comment + '\'' +
                 ", userId=" + userId +
+                ", user=" + user +
                 '}';
     }
 }

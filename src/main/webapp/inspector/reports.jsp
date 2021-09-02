@@ -1,8 +1,15 @@
+<%@ page import="com.example.taxserviceservlet.entity.TaxPeriod" %>
+<%@ page import="com.example.taxserviceservlet.entity.Status" %>
+<%@ page import="com.example.taxserviceservlet.web.dto.SortField" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 
 <head>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="message"/>
+
     <meta charset="UTF-8">
     <title>Reports</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
@@ -58,6 +65,7 @@
                 </form>
             </div>
         </div>
+        <%--                <c:set var="periods" value="<%=SortField.values()%>"/>--%>
 
         <div class="col-8">
             <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
@@ -67,35 +75,26 @@
                 </label>
                 <select id="period" name="period" class="form-select" aria-label="Default select example">
                     <option selected value="">Select period</option>
-                    <option label="First period" value="FIRST_PERIOD"></option>
-                    <option label="Second period" value="SECOND_PERIOD"></option>
-<%--                    <option th:each="period : ${T(com.taxserviceapp.data.entity.TaxPeriod).values()}"--%>
-<%--                            th:text="${period.getPeriod()}"--%>
-<%--                            th:value="${period.name()}"--%>
-<%--                            th:selected="${period} == ${lastSelectedPeriod}">--%>
-<%--                        ..--%>
-<%--                    </option>--%>
+                    <c:forEach var="period" items="${TaxPeriod.values()}">
+                        <option label="${period}" value="${period}">..</option>
+                    </c:forEach>
+
                 </select>
 
-<%--                <select id="status" name="status" class="form-select" aria-label="Default select example">--%>
-<%--                    <option selected value="">Select status</option>--%>
-<%--                    <option th:each="status : ${T(com.taxserviceapp.data.entity.Status).values()}"--%>
-<%--                            th:text="${status.getStatusName()}"--%>
-<%--                            th:value="${status.name()}"--%>
-<%--                            th:selected="${status} == ${lastSelectedStatus}">--%>
-<%--                        ..--%>
-<%--                    </option>--%>
-<%--                </select>--%>
+                <select id="status" name="status" class="form-select" aria-label="Default select example">
+                    <option selected value="">Select status</option>
+                    <c:forEach var="status" items="${Status.values()}">
+                        <option label="${status}" value="${status}">..</option>
+                    </c:forEach>
+                </select>
 
-<%--                <select id="sortField" name="sortField" class="form-select" aria-label="Default select example">--%>
-<%--                    <option value="">Select sorting field</option>--%>
-<%--                    <option th:each="sortField : ${T(com.taxserviceapp.web.dto.SortField).values()}"--%>
-<%--                            th:text="${sortField.getSortName()}"--%>
-<%--                            th:value="${sortField.name()}"--%>
-<%--                            th:selected="${sortField} == ${lastSelectedSort}">--%>
-<%--                        ..--%>
-<%--                    </option>--%>
-<%--                </select>--%>
+                <select id="sortField" name="sortField" class="form-select" aria-label="Default select example">
+                    <option value="">Select sorting field</option>
+                    <c:forEach var="sortField" items="${SortField.values()}">
+                        <option label="${sortField}" value="${sortField}">..</option>
+                    </c:forEach>
+
+                </select>
 
                 <button type="submit" class="btn btn-outline-primary">Filter</button>
             </form>
@@ -117,37 +116,42 @@
                 <th scope="col">Action</th>
             </tr>
             </thead>
-
             <tbody>
-<%--            ${requestScope.get("reports")}--%>
-            ${requestScope.reports}
-<%--            <tr>--%>
-<%--                <td class="text-center" colspan="9">--%>
-<%--                    <div th:if="${errorNoResult != null}" th:text="${errorNoResult}">--%>
-<%--                        Error no result--%>
-<%--                    </div>--%>
-<%--                </td>--%>
-<%--            </tr>--%>
-<%--            <tr th:each="report: ${reports}">--%>
-<%--                <td><span th:text="${report.id}">Report id</span></td>--%>
-<%--                <td><a th:href="@{/inspector/user-view(userId=${report.user.id})}"--%>
-<%--                       th:text="${report.user.firstName} + ' ' + ${report.user.lastName}">Name Surname</a>--%>
-<%--                </td>--%>
-<%--                <td><span th:text="${report.user.ipn}">IPN</span></td>--%>
-<%--                <td><span th:text="${report.reportDate}">Report Date</span></td>--%>
-<%--                <td><span th:text="${report.year}">Year</span></td>--%>
-<%--                <td><span th:text="${report.taxPeriod.getPeriod()}">Report Period</span></td>--%>
-<%--                <td><span th:text="${report.comment}">Comment</span></td>--%>
-<%--                <td><span th:text="${report.status.getStatusName()}">status</span></td>--%>
-<%--                <td>--%>
-<%--                    <div>--%>
-<%--                        <form action="#" th:action="@{/inspector/report-view}" th:method="GET">--%>
-<%--                            <input type="hidden" id="report" name="reportId" th:value="${report.id}">--%>
-<%--                            <input type="submit" value="View"/>--%>
-<%--                        </form>--%>
-<%--                    </div>--%>
-<%--                </td>--%>
-<%--            </tr>--%>
+            <tr>
+                <td class="text-center" colspan="9">
+                    <div>
+                        <c:if test="${requestScope.noReportsFound != null}">
+                            <b><c:out value="${requestScope.noReportsFound}"/></b>
+                        </c:if>
+                    </div>
+            <tbody>
+            <c:forEach var="report" items="${requestScope.reports}">
+
+                <tr>
+                    <td><span><c:out value="${report.id}"/></span></td>
+                    <td><a href="${pageContext.request.contextPath}/inspector/user-view?userId=${report.userId}">
+                            ${report.userDTO.firstName} ${report.userDTO.lastName}</a>
+                    </td>
+                    <td><span><c:out value="${report.userDTO.ipn}"/></span></td>
+                    <td><span><c:out value="${report.reportDate}"/></span></td>
+                    <td><span><c:out value="${report.year}"/></span></td>
+                    <td><span><c:out value="${report.taxPeriod}"/></span></td>
+                    <td>
+                        <c:if test="${report.comment != null}">
+                        <span>Has comment</span>
+                        </c:if>
+                    <td><span><c:out value="${report.status}"/></span></td>
+                    <td>
+                        <div>
+                            <form action="${pageContext.request.contextPath}/inspector/report-view" method="GET">
+                                <input type="hidden" id="report" name="reportId" value="${report.id}">
+                                <input type="submit" value="View"/>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+
             </tbody>
         </table>
     </div>
