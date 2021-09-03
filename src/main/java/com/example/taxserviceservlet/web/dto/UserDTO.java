@@ -26,7 +26,7 @@ public class UserDTO {
 
     private String userRole;
 
-    public static Builder Builder() {
+    public static Builder builder() {
         return new UserDTO.Builder();
     }
 

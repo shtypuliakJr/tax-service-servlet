@@ -5,6 +5,7 @@ import com.example.taxserviceservlet.web.controller.command.app.*;
 import com.example.taxserviceservlet.web.controller.command.exception.ExceptionCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorReportsCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorStatisticCommand;
+import com.example.taxserviceservlet.web.controller.command.inspector.InspectorUserViewCommand;
 import com.example.taxserviceservlet.web.controller.command.user.UserReportsCommand;
 
 import javax.servlet.ServletException;
@@ -28,6 +29,7 @@ public class FrontControllerServlet extends HttpServlet {
         commands.put("user/reports", new UserReportsCommand());
         commands.put("inspector/reports", new InspectorReportsCommand());
         commands.put("inspector/statistic", new InspectorStatisticCommand());
+        commands.put("inspector/user-view", new InspectorUserViewCommand());
         commands.put("error", new ExceptionCommand());
     }
 

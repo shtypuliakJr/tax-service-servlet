@@ -17,7 +17,7 @@ public class RegistrationCommand implements Command {
         if (request.getMethod().equals("GET"))
             return "/registration";
 
-        UserDTO userDTO = new UserDTO.Builder()
+        UserDTO userDTO = UserDTO.builder()
                 .firstName(request.getParameter("firstName"))
                 .lastName(request.getParameter("lastName"))
                 .email(request.getParameter("email"))

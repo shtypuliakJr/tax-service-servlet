@@ -91,9 +91,9 @@ public class ReportsDao implements Crud<Report, Long> {
     public Map<String, Long> getStatisticDataReportsCount() {
 
         String statisticReportsCountQuery = " SELECT COUNT(*) AS count, " +
-                " SUM(CASE WHEN r.status = 'PROCESSING' THEN 1 ELSE 0 END) AS processing_count," +
-                " SUM(CASE WHEN r.status = 'APPROVED' THEN 1 ELSE 0 END) AS approved_count," +
-                " SUM(CASE WHEN r.status = 'DISAPPROVED' THEN 1 ELSE 0 END) AS disapproved_count" +
+                " SUM(IF(r.status = 'PROCESSING', 1, 0)) AS processing_count," +
+                " SUM(IF(r.status = 'APPROVED', 1, 0)) AS approved_count," +
+                " SUM(IF(r.status = 'DISAPPROVED', 1, 0)) AS disapproved_count" +
                 " FROM report AS r";
 
         Connection connection = DaoConnection.getConnection();

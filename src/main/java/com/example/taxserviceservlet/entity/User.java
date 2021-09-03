@@ -29,7 +29,7 @@ public class User {
 
     public static class Builder {
 
-        private User user;
+        private final User user;
 
         public Builder() {
             user = new User();

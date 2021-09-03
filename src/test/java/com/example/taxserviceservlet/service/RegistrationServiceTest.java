@@ -15,7 +15,7 @@ class RegistrationServiceTest {
 
     RegistrationService registrationService = new RegistrationService();
 
-    UserDTO userDTO = new UserDTO.Builder()
+    UserDTO userDTO = UserDTO.builder()
             .firstName("Name1")
             .lastName("Surname1")
             .email("testMyEmail@test.com")
