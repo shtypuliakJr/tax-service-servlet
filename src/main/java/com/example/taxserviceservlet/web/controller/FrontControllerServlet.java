@@ -3,6 +3,7 @@ package com.example.taxserviceservlet.web.controller;
 import com.example.taxserviceservlet.web.controller.command.*;
 import com.example.taxserviceservlet.web.controller.command.app.*;
 import com.example.taxserviceservlet.web.controller.command.exception.ExceptionCommand;
+import com.example.taxserviceservlet.web.controller.command.inspector.InspectorReportViewCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorReportsCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorStatisticCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorUserViewCommand;
@@ -30,6 +31,7 @@ public class FrontControllerServlet extends HttpServlet {
         commands.put("inspector/reports", new InspectorReportsCommand());
         commands.put("inspector/statistic", new InspectorStatisticCommand());
         commands.put("inspector/user-view", new InspectorUserViewCommand());
+        commands.put("inspector/report-view", new InspectorReportViewCommand());
         commands.put("error", new ExceptionCommand());
     }
 
@@ -52,7 +54,7 @@ public class FrontControllerServlet extends HttpServlet {
         String path = request.getRequestURI().replaceFirst("/tax_service_servlet_war_exploded/", "");
 
         Command command = commands.getOrDefault(path.trim(), (c) -> "/error/error404");
-        String page = "/error";
+        String page = "/error/error";
 
         try {
             page = command.execute(request);

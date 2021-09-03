@@ -23,3 +23,4 @@ SELECT SUM(IF(u.user_role = 'USER', 1, 0))      AS user_count,
        SUM(IF(u.user_role = 'INSPECTOR', 1, 0)) AS inspector_count
 FROM user as u;
 
+

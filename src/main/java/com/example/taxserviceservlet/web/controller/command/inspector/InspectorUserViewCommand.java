@@ -1,5 +1,6 @@
 package com.example.taxserviceservlet.web.controller.command.inspector;
 
+import com.example.taxserviceservlet.exception.NoUserFoundException;
 import com.example.taxserviceservlet.service.UserService;
 import com.example.taxserviceservlet.web.controller.command.Command;
 import com.example.taxserviceservlet.web.dto.UserDTO;
@@ -17,6 +18,8 @@ public class InspectorUserViewCommand implements Command {
             request.setAttribute("userDTO", userDTO);
         } catch (NumberFormatException e) {
             request.setAttribute("errorInvalidParam", "Invalid parameter");
+        } catch (NoUserFoundException e) {
+            request.setAttribute("noUserFoundException", e.getMessage());
         }
         return "/inspector/user-view";
     }

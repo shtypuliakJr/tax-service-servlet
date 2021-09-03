@@ -37,7 +37,7 @@ public class UserService {
 
         return userDao.findById(userId)
                 .map(PojoConverter::convertUserEntityToDto)
-                .orElseThrow(() -> new NoUserFoundException(""));
+                .orElseThrow(() -> new NoUserFoundException("No user found by id"));
 
     }
 }

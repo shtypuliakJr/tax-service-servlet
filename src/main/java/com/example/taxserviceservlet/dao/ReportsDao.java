@@ -10,32 +10,61 @@ import java.util.*;
 public class ReportsDao implements Crud<Report, Long> {
 
     @Override
-    public Optional<Report> findById(Long aLong) throws SQLException {
-        return Optional.empty();
+    public Optional<Report> findById(Long reportId) {
+
+        String findByIdQuery = "SELECT * FROM report WHERE id = ?";
+
+        Report report = null;
+        Connection connection = DaoConnection.getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(findByIdQuery)) {
+
+            preparedStatement.setLong(1, reportId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                report = Report.builder()
+                        .id(resultSet.getLong("id"))
+                        .income(resultSet.getInt("income"))
+                        .taxRate(resultSet.getInt("tax_rate"))
+                        .taxPeriod(TaxPeriod.valueOf(resultSet.getString("tax_period")))
+                        .status(Status.valueOf(resultSet.getString("status")))
+                        .year(resultSet.getInt("year"))
+                        .comment(resultSet.getString("comment"))
+                        .reportDate(resultSet.getDate("report_date"))
+                        .userId(resultSet.getLong("user_id"))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+        return Optional.ofNullable(report);
     }
 
     @Override
-    public List<Report> findAll() throws SQLException {
+    public List<Report> findAll() {
         return null;
     }
 
     @Override
-    public User save(Report o) throws SQLException {
+    public User save(Report o) {
         return null;
     }
 
     @Override
-    public User update(Report o) throws SQLException {
+    public User update(Report o) {
         return null;
     }
 
     @Override
-    public boolean delete(Report o) throws SQLException {
+    public boolean delete(Report o) {
         return false;
     }
 
     public List<Report> findByParam(Long id, Date reportDate, TaxPeriod period,
                                     Status status, SortField sortField) throws SQLException {
+
         // ToDo: refactor filtering by period and status
 
         String sortBy = sortField == null ? "rr.id" : sortField.fieldInTable + " " + sortField.direction;

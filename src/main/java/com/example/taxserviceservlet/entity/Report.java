@@ -24,6 +24,10 @@ public class Report {
 
     private User user;
 
+    public static Builder builder() {
+        return new Report.Builder();
+    }
+
     public static class Builder {
 
         Report report;
