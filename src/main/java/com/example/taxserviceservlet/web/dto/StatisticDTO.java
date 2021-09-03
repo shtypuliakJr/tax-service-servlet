@@ -8,9 +8,9 @@ public class StatisticDTO {
     private Long countOfReports;
     private Long countOfInspectors;
 
-    private Integer processingReports;
-    private Integer approvedReports;
-    private Integer disapprovedReports;
+    private Long processingReports;
+    private Long approvedReports;
+    private Long disapprovedReports;
 
     Map<Integer, Long> countReportsPerYear;
 
@@ -39,27 +39,27 @@ public class StatisticDTO {
         this.countOfInspectors = countOfInspectors;
     }
 
-    public Integer getProcessingReports() {
+    public Long getProcessingReports() {
         return processingReports;
     }
 
-    public void setProcessingReports(Integer processingReports) {
+    public void setProcessingReports(Long processingReports) {
         this.processingReports = processingReports;
     }
 
-    public Integer getApprovedReports() {
+    public Long getApprovedReports() {
         return approvedReports;
     }
 
-    public void setApprovedReports(Integer approvedReports) {
+    public void setApprovedReports(Long approvedReports) {
         this.approvedReports = approvedReports;
     }
 
-    public Integer getDisapprovedReports() {
+    public Long getDisapprovedReports() {
         return disapprovedReports;
     }
 
-    public void setDisapprovedReports(Integer disapprovedReports) {
+    public void setDisapprovedReports(Long disapprovedReports) {
         this.disapprovedReports = disapprovedReports;
     }
 
@@ -71,7 +71,68 @@ public class StatisticDTO {
         this.countReportsPerYear = countReportsPerYear;
     }
 
-    public static class Builder extends StatisticDTO {
+    public static StatisticDTO.Builder builder() {
+        return new StatisticDTO.Builder();
+    }
 
+    public static class Builder {
+
+        private final StatisticDTO statisticDTO;
+
+        public Builder() {
+            statisticDTO = new StatisticDTO();
+        }
+
+        public Builder countOfUsers(Long countOfUsers) {
+            this.statisticDTO.countOfUsers = countOfUsers;
+            return this;
+        }
+
+        public Builder countOfInspectors(Long countOfInspectors) {
+            this.statisticDTO.countOfInspectors = countOfInspectors;
+            return this;
+        }
+
+        public Builder countOfReports(Long countOfReports) {
+            this.statisticDTO.countOfReports = countOfReports;
+            return this;
+        }
+
+        public Builder processingReports(Long processingReports) {
+            this.statisticDTO.processingReports = processingReports;
+            return this;
+        }
+
+        public Builder approvedReports(Long approvedReports) {
+            this.statisticDTO.approvedReports = approvedReports;
+            return this;
+        }
+
+        public Builder disapprovedReports(Long disapprovedReports) {
+            this.statisticDTO.disapprovedReports = disapprovedReports;
+            return this;
+        }
+
+        public Builder countReportsPerYear(Map<Integer, Long> countReportsPerYear) {
+            this.statisticDTO.countReportsPerYear = countReportsPerYear;
+            return this;
+        }
+
+        public StatisticDTO build() {
+            return this.statisticDTO;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "StatisticDTO{" +
+                "countOfUsers=" + countOfUsers +
+                ", countOfReports=" + countOfReports +
+                ", countOfInspectors=" + countOfInspectors +
+                ", processingReports=" + processingReports +
+                ", approvedReports=" + approvedReports +
+                ", disapprovedReports=" + disapprovedReports +
+                ", countReportsPerYear=" + countReportsPerYear +
+                '}';
     }
 }

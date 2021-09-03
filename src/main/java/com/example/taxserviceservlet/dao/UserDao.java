@@ -10,7 +10,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 public class UserDao implements Crud<User, Long> {
 
@@ -83,7 +85,7 @@ public class UserDao implements Crud<User, Long> {
         Connection connection = DaoConnection.getConnection();
         String insert = "INSERT INTO user (first_name, last_name, email, user_password, age, ipn, " +
                 "personality, address, date, user_role, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement=connection.prepareStatement(insert)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
@@ -111,5 +113,30 @@ public class UserDao implements Crud<User, Long> {
     @Override
     public boolean delete(User o) throws SQLException {
         return false;
+    }
+
+    public Map<String, Long> getStatisticDataUsersCountByRoles() {
+
+        String statisticReportsCountQuery = "SELECT " +
+                "       SUM(IF(u.user_role = 'USER', 1, 0)) AS user_count, " +
+                "       SUM(IF(u.user_role = 'INSPECTOR', 1, 0)) AS inspector_count" +
+                "       FROM user as u";
+
+        Connection connection = DaoConnection.getConnection();
+
+        Map<String, Long> data = new TreeMap<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                data.put("user_count", resultSet.getLong("user_count"));
+                data.put("inspector_count", resultSet.getLong("inspector_count"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }

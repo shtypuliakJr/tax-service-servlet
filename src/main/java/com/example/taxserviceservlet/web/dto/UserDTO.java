@@ -33,7 +33,7 @@ public class UserDTO {
 
     public static class Builder {
 
-        private UserDTO userDTO;
+        private final UserDTO userDTO;
 
         public Builder() {
             userDTO = new UserDTO();

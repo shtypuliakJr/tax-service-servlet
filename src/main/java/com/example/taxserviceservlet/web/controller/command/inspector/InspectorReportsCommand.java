@@ -43,12 +43,6 @@ public class InspectorReportsCommand implements Command {
         String statusParam = request.getParameter("status");
         String sortByParam = request.getParameter("sortBy");
 
-        System.out.println("userId " + idParam + " " + (idParam == null));
-        System.out.println("date " + dateParam + " " + (dateParam == null));
-        System.out.println("period " + periodParam + " " + (periodParam == null));
-        System.out.println("status " + statusParam + " " + (statusParam == null));
-        System.out.println("sortBy " + sortByParam + " " + (sortByParam == null));
-
         if (!(idParam == null || idParam.isEmpty())) {
             id = Long.valueOf(idParam);
         }
@@ -65,11 +59,6 @@ public class InspectorReportsCommand implements Command {
             sortBy = SortField.valueOf(sortByParam);
         }
 
-        System.out.println("userId " + id);
-        System.out.println("date " + date);
-        System.out.println("period " + period);
-        System.out.println("status " + status);
-        System.out.println("sortBy " + sortBy);
         try {
             request.setAttribute("reports", inspectorService
                     .getReportsByFilterParam(id, date, period, status, sortBy));
@@ -80,15 +69,6 @@ public class InspectorReportsCommand implements Command {
     }
 
     public String reportsPost(HttpServletRequest request) {
-        System.out.println("POST METHOD INSPECTOR REPORTS");
         return "/inspector/reports";
     }
-
-
-//    private <T> T getParamValue(String param, Class<T> tClass) throws ClassNotFoundException, NoSuchMethodException {
-//        if (param != null) {
-//            return (T) tClass.getMethod("valueOf", Class.forName(param));
-//        }
-//        return null;
-//    }
 }

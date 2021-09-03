@@ -1,17 +1,11 @@
 package com.example.taxserviceservlet.dao;
 
-import com.example.taxserviceservlet.entity.Report;
-import com.example.taxserviceservlet.entity.Status;
-import com.example.taxserviceservlet.entity.TaxPeriod;
-import com.example.taxserviceservlet.entity.User;
-import com.example.taxserviceservlet.web.dto.ReportDTO;
+import com.example.taxserviceservlet.entity.*;
 import com.example.taxserviceservlet.web.dto.SortField;
 
-import java.math.BigDecimal;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Date;
+import java.util.*;
 
 public class ReportsDao implements Crud<Report, Long> {
 
@@ -92,5 +86,49 @@ public class ReportsDao implements Crud<Report, Long> {
             }
         }
         return reports;
+    }
+
+    public Map<String, Long> getStatisticDataReportsCount() {
+
+        String statisticReportsCountQuery = " SELECT COUNT(*) AS count, " +
+                " SUM(CASE WHEN r.status = 'PROCESSING' THEN 1 ELSE 0 END) AS processing_count," +
+                " SUM(CASE WHEN r.status = 'APPROVED' THEN 1 ELSE 0 END) AS approved_count," +
+                " SUM(CASE WHEN r.status = 'DISAPPROVED' THEN 1 ELSE 0 END) AS disapproved_count" +
+                " FROM report AS r";
+
+        Connection connection = DaoConnection.getConnection();
+
+        Map<String, Long> data = new TreeMap<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                data.put("count", resultSet.getLong("count"));
+                data.put("processing_count", resultSet.getLong("processing_count"));
+                data.put("approved_count", resultSet.getLong("approved_count"));
+                data.put("disapproved_count", resultSet.getLong("disapproved_count"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    public Map<Integer, Long> getStatisticDataReportsPerYearCount() {
+
+        String statisticReportsCountQuery =
+                "SELECT year, COUNT(*) AS count FROM report AS r GROUP BY r.year ORDER BY year";
+
+        Connection connection = DaoConnection.getConnection();
+
+        Map<Integer, Long> data = new TreeMap<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                data.put(resultSet.getInt("year"), resultSet.getLong("count"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }
