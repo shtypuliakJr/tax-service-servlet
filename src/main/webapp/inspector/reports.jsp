@@ -88,7 +88,7 @@
                     </c:forEach>
                 </select>
 
-                <select id="sortField" name="sortField" class="form-select" aria-label="Default select example">
+                <select id="sortField" name="sortBy" class="form-select" aria-label="Default select example">
                     <option value="">Select sorting field</option>
                     <c:forEach var="sortField" items="${SortField.values()}">
                         <option label="${sortField}" value="${sortField}">..</option>

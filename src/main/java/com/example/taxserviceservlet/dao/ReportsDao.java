@@ -42,6 +42,9 @@ public class ReportsDao implements Crud<Report, Long> {
 
     public List<Report> findByParam(Long id, Date reportDate, TaxPeriod period,
                                     Status status, SortField sortField) throws SQLException {
+        // ToDo: refactor filtering by period and status
+
+        String sortBy = sortField == null ? "rr.id" : sortField.fieldInTable + " " + sortField.direction;
 
         String query = "select rr.*, u.first_name, u.last_name, u.ipn " +
                 "FROM ( select r.* from report r " +
@@ -49,10 +52,11 @@ public class ReportsDao implements Crud<Report, Long> {
                 "AND r.report_date = (CASE WHEN ? IS NULL THEN r.report_date ELSE ? END)" +
                 "AND r.tax_period = (CASE WHEN ? = 'null' THEN r.tax_period ELSE ? END)" +
                 "AND r.status = (CASE WHEN ? = 'null' THEN r.status ELSE ? END)" +
-                ") rr left join user u on rr.user_id = u.id";
-
+                ") rr left join user u on rr.user_id = u.id order by " + sortBy;
         List<Report> reports = new ArrayList<>();
+
         Connection connection = DaoConnection.getConnection();
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setObject(1, id);
@@ -64,10 +68,8 @@ public class ReportsDao implements Crud<Report, Long> {
             preparedStatement.setString(7, String.valueOf(status));
             preparedStatement.setString(8, String.valueOf(status));
 
-            System.out.println(preparedStatement);
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println(preparedStatement);
-            System.out.println(query);
+
             while (resultSet.next()) {
                 Report report = new Report.Builder()
                         .id(resultSet.getLong("id"))
@@ -86,19 +88,9 @@ public class ReportsDao implements Crud<Report, Long> {
                                 .ipn(resultSet.getString("ipn"))
                                 .build())
                         .build();
-//                System.out.println("REPORT in DAO\n" + report);
                 reports.add(report);
             }
-            System.out.println(reports);
-//            reports.forEach(System.out::println);
         }
         return reports;
-    }
-
-    public <T> String filterField(T param, String fieldName) {
-        System.out.println(fieldName + " " + param);
-        return Optional.ofNullable(param).map((p) -> " AND r." + fieldName + " = '" + param + "'")
-                .orElse("");
-
     }
 }

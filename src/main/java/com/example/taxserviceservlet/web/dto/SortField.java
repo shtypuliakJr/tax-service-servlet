@@ -4,8 +4,8 @@ public enum SortField {
     YEAR_OLD("Year old", "year", "asc"),
     YEAR_NEW("Year new", "year", "desc"),
 
-    DATE_OLD("Date old", "reportDate", "asc"),
-    DATE_NEW("Date new", "reportDate", "desc");
+    DATE_OLD("Date old", "report_date", "asc"),
+    DATE_NEW("Date new", "report_date", "desc");
 
     public String sortName;
     public String fieldInTable;
