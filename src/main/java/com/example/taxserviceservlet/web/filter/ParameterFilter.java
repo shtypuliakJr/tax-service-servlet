@@ -15,5 +15,6 @@ public class ParameterFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String userId = request.getParameter("userId");
         //ToDo: filter input parameters
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 }
