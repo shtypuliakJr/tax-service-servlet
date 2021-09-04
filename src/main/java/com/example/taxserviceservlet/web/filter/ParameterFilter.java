@@ -17,7 +17,6 @@ public class ParameterFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        // todo: save fer input after another page
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
@@ -28,25 +27,26 @@ public class ParameterFilter implements Filter {
         String statusParam = request.getParameter("status");
         String sortByParam = request.getParameter("sortBy");
 
-        if (!(idParam == null || idParam.isEmpty())) {
-            request.setAttribute("userId", Long.valueOf(idParam));
-        }
-        if (!(dateParam == null || dateParam.isEmpty())) {
-            request.setAttribute("date", Date.valueOf(dateParam));
-            session.setAttribute("date", request.getAttribute("date"));
-        }
-        if (!(periodParam == null || periodParam.isEmpty())) {
-            request.setAttribute("period", TaxPeriod.valueOf(periodParam));
-            session.setAttribute("period", request.getAttribute("period"));
-        }
-        if (!(statusParam == null || statusParam.isEmpty())) {
-            request.setAttribute("status", Status.valueOf(statusParam));
-            session.setAttribute("status", request.getAttribute("status"));
-        }
-        if (!(sortByParam == null || sortByParam.isEmpty())) {
-            request.setAttribute("sortBy", SortField.valueOf(sortByParam));
-            session.setAttribute("sortBy", request.getAttribute("sortBy"));
-        }
+        if (idParam != null)
+            session.setAttribute("userId", idParam.isEmpty() ? null : Long.valueOf(idParam));
+
+        if (dateParam != null)
+            session.setAttribute("date", dateParam.isEmpty() ? null : Date.valueOf(dateParam));
+
+        if (periodParam != null)
+            session.setAttribute("period", periodParam.isEmpty() ? null : TaxPeriod.valueOf(periodParam));
+
+        if (statusParam != null)
+            session.setAttribute("status", statusParam.isEmpty() ? null : Status.valueOf(statusParam));
+
+        if (sortByParam != null)
+            session.setAttribute("sortBy", sortByParam.isEmpty() ? null : SortField.valueOf(sortByParam));
+
+        request.setAttribute("userId", session.getAttribute("userId"));
+        request.setAttribute("date", session.getAttribute("date"));
+        request.setAttribute("period", session.getAttribute("period"));
+        request.setAttribute("status", session.getAttribute("status"));
+        request.setAttribute("sortBy", session.getAttribute("sortBy"));
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

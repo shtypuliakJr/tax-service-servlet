@@ -21,9 +21,6 @@ public class InspectorReportsCommand implements Command {
         if (request.getMethod().equals("GET"))
             return reportsGet(request);
 
-        else if (request.getMethod().equals("POST"))
-            return reportsPost(request);
-
         return null;
     }
 
@@ -35,49 +32,12 @@ public class InspectorReportsCommand implements Command {
         Status status = (Status) request.getAttribute("status");
         SortField sortBy = (SortField) request.getAttribute("sortBy");
 
-//        String idParam = request.getParameter("userId");
-//        String dateParam = request.getParameter("date");
-//        String periodParam = request.getParameter("period");
-//        String statusParam = request.getParameter("status");
-//        String sortByParam = request.getParameter("sortBy");
-//        String pageNumberParam = request.getParameter("page");
-
-//        HttpSession session = request.getSession();
-
-//        if (!(idParam == null || idParam.isEmpty())) {
-//            id = Long.valueOf(idParam);
-//        }
-//        if (!(dateParam == null || dateParam.isEmpty())) {
-//            date = Date.valueOf(dateParam);
-//        }
-//        if (!(periodParam == null || periodParam.isEmpty())) {
-//            period = TaxPeriod.valueOf(periodParam);
-//        }
-//        if (!(statusParam == null || statusParam.isEmpty())) {
-//            status = Status.valueOf(statusParam);
-//        }
-//        if (!(sortByParam == null || sortByParam.isEmpty())) {
-//            sortBy = SortField.valueOf(sortByParam);
-//        }
-//        if (!(pageNumberParam == null || pageNumberParam.isEmpty())) {
-//            pageNumber = Integer.parseInt(pageNumberParam);
-//        }
-//
-//        session.setAttribute("date", date);
-//        session.setAttribute("period", period);
-//        session.setAttribute("status", status);
-//        session.setAttribute("sortBy", sortBy);
-
         try {
             request.setAttribute("reports", inspectorService
                     .getReportsByFilterParam(id, date, period, status, sortBy));
         } catch (NoReportsFoundException e) {
             request.setAttribute("noReportsFound", e.getMessage());
         }
-        return "/inspector/reports";
-    }
-
-    public String reportsPost(HttpServletRequest request) {
         return "/inspector/reports";
     }
 }

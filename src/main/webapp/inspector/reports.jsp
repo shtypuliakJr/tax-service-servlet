@@ -55,7 +55,7 @@
     <div class="row">
         <div class="col-4">
             <div class="input-group">
-                <form action="search" method="GET">
+                <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
                     <div class="d-flex flex-row">
                         <input id="search" name="search" value="${search}"
                                class="form-control rounded" placeholder="Enter id, ipn, name, surname"
@@ -65,14 +65,15 @@
                 </form>
             </div>
         </div>
-        <%--                <c:set var="periods" value="<%=SortField.values()%>"/>--%>
-
-        <div class="col-8">
+    </div>
+    <div class="row">
+        <div class="col-11">
             <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
+                <input type="hidden" name="userId" value="${sessionScope.userId}"/>
                 <label for="date">
                     Select date:
                     <input type="date" id="date" name="date" min="2010-01-01" max="2021-12-31"
-                    value="${sessionScope.date}"
+                           value="${sessionScope.date}"
                     />
                 </label>
                 <select id="period" name="period" class="form-select" aria-label="Default select example">
@@ -104,10 +105,18 @@
                             ..
                         </option>
                     </c:forEach>
-
                 </select>
-
                 <button type="submit" class="btn btn-outline-primary">Filter</button>
+            </form>
+        </div>
+        <div class="col-1">
+            <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
+                <input type="hidden" name="userId" value=""/>
+                <input type="hidden" name="date" value=""/>
+                <input type="hidden" name="period" value=""/>
+                <input type="hidden" name="status" value=""/>
+                <input type="hidden" name="sortBy" value=""/>
+                <button type="submit" class="btn btn-outline-warning">Drop filter</button>
             </form>
         </div>
 

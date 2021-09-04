@@ -1,5 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fmr" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: shtypuliak_r
@@ -37,20 +38,22 @@
         <div class="col-10 col-md-8 col-lg-6">
             <div class="container alert alert-primary">
                 <form class="form-example" name="f" action="login" method="post">
+
                     <div style="text-align: center">
-                       <h1><fmt:message key="login.login"/></h1>
+                        <h1><fmt:message key="login.login"/></h1>
                     </div>
 
                     <div class="form-group">
                         <label for="email"><fmr:message key="data.input.email"/></label>
                         <input type="text" id="email" name="email" class="form-control"
-                               placeholder="<fmt:message key="data.input.email"/>">
+                               placeholder="<fmt:message key="data.input.email"/>"
+                               value="${requestScope.email}">
                     </div>
 
                     <div class="form-group">
                         <label for="password"><fmr:message key="data.input.password"/></label>
-                            <input type="password" id="password" name="password" class="form-control"
-                                   placeholder="<fmt:message key="data.input.password"/>">
+                        <input type="password" id="password" name="password" class="form-control"
+                               placeholder="<fmt:message key="data.input.password"/>">
                     </div>
 
                     <div class="col text-center">
@@ -58,8 +61,16 @@
                             <fmt:message key="login.login"/>
                         </button>
                     </div>
-
                 </form>
+                <c:if test="${requestScope.exceptionLogin != null}">
+                    <div class="alert alert-error">
+                        <div class="alert alert-danger" role="alert">
+                            <div style="text-align: center" class="error-invalid">
+                                    ${requestScope.exceptionLogin}
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
                 <a href="registration"><fmt:message key="login.notRegistered"/></a>
             </div>
         </div>
