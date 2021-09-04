@@ -1,6 +1,7 @@
 package com.example.taxserviceservlet.service;
 
 import com.example.taxserviceservlet.dao.UserDao;
+import com.example.taxserviceservlet.dao.impl.UserDaoImpl;
 import com.example.taxserviceservlet.entity.User;
 import com.example.taxserviceservlet.exception.NoUserFoundException;
 import com.example.taxserviceservlet.exception.WrongPasswordException;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 public class UserService {
 
-    UserDao userDao = new UserDao();
+    UserDao userDao = new UserDaoImpl();
     private static UserService userService;
 
     public static UserService getInstance() {

@@ -1,21 +1,17 @@
 package com.example.taxserviceservlet.dao;
 
-import com.example.taxserviceservlet.entity.Report;
+import com.example.taxserviceservlet.dao.impl.ReportDaoImpl;
 import com.example.taxserviceservlet.entity.Status;
 import com.example.taxserviceservlet.entity.TaxPeriod;
 import com.example.taxserviceservlet.web.dto.SortField;
-import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.sql.Date;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReportsDaoTest {
 
-    ReportsDao reportsDao = new ReportsDao();
+    ReportDao reportDao = new ReportDaoImpl();
 
     @Test
     void find_reports_by_param(Long id, Date reportDate, TaxPeriod period,

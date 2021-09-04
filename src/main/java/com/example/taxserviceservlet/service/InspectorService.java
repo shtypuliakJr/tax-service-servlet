@@ -1,7 +1,9 @@
 package com.example.taxserviceservlet.service;
 
-import com.example.taxserviceservlet.dao.ReportsDao;
+import com.example.taxserviceservlet.dao.ReportDao;
 import com.example.taxserviceservlet.dao.UserDao;
+import com.example.taxserviceservlet.dao.impl.ReportDaoImpl;
+import com.example.taxserviceservlet.dao.impl.UserDaoImpl;
 import com.example.taxserviceservlet.entity.Report;
 import com.example.taxserviceservlet.entity.Status;
 import com.example.taxserviceservlet.entity.TaxPeriod;
@@ -19,8 +21,8 @@ import java.util.stream.Collectors;
 
 public class InspectorService {
 
-    ReportsDao reportsDao = new ReportsDao();
-    UserDao userDao = new UserDao();
+    ReportDao reportDao = new ReportDaoImpl();
+    UserDao userDao = new UserDaoImpl();
 
 
     private static InspectorService inspectorService;
@@ -37,11 +39,8 @@ public class InspectorService {
 
         List<Report> reportList = null;
 
-        try {
-            reportList = reportsDao.findByParamWithUser(id, reportDate, period, status, sortField, pageNumber);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        reportList = reportDao.findByParamWithUser(id, reportDate, period, status, sortField, pageNumber);
+
 
         if (reportList == null || reportList.isEmpty())
             throw new NoReportsFoundException("No reports found");
@@ -57,9 +56,9 @@ public class InspectorService {
 
     public StatisticDTO getStatisticData() {
 
-        Map<String, Long> statisticDataReportsCount = reportsDao.getStatisticDataReportsCount();
+        Map<String, Long> statisticDataReportsCount = reportDao.getStatisticDataReportsCount();
 
-        Map<Integer, Long> statisticDataReportsPerYearCount = reportsDao.getStatisticDataReportsPerYearCount();
+        Map<Integer, Long> statisticDataReportsPerYearCount = reportDao.getStatisticDataReportsPerYearCount();
 
         Map<String, Long> statisticDataUsersCountByRoles = userDao.getStatisticDataUsersCountByRoles();
 

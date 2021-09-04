@@ -1,10 +1,11 @@
 package com.example.taxserviceservlet.service;
 
-import com.example.taxserviceservlet.dao.ReportsDao;
+import com.example.taxserviceservlet.dao.ReportDao;
 import com.example.taxserviceservlet.dao.UserDao;
+import com.example.taxserviceservlet.dao.impl.ReportDaoImpl;
+import com.example.taxserviceservlet.dao.impl.UserDaoImpl;
 import com.example.taxserviceservlet.entity.Report;
 import com.example.taxserviceservlet.entity.User;
-import com.example.taxserviceservlet.exception.NoReportsFoundException;
 import com.example.taxserviceservlet.util.PojoConverter;
 import com.example.taxserviceservlet.web.dto.ReportDTO;
 
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 public class ReportService {
 
-    ReportsDao reportDao = new ReportsDao();
+    ReportDao reportDao = new ReportDaoImpl();
 
     private static ReportService reportService;
 
@@ -25,7 +26,7 @@ public class ReportService {
     public ReportDTO getReportById(Long reportId) {
 
         Optional<Report> report = reportDao.findById(reportId);
-        UserDao userDao = new UserDao();
+        UserDao userDao = new UserDaoImpl();
 
         if (report.isPresent()) {
             Optional<User> byId = userDao.findById(report.get().getUserId());

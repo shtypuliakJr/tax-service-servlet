@@ -1,13 +1,38 @@
-package com.example.taxserviceservlet.dao;
+package com.example.taxserviceservlet.dao.impl;
 
-import com.example.taxserviceservlet.entity.*;
+import com.example.taxserviceservlet.dao.DaoConnection;
+import com.example.taxserviceservlet.dao.ReportDao;
+import com.example.taxserviceservlet.entity.Report;
+import com.example.taxserviceservlet.entity.Status;
+import com.example.taxserviceservlet.entity.TaxPeriod;
+import com.example.taxserviceservlet.entity.User;
 import com.example.taxserviceservlet.web.dto.SortField;
 
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
-public class ReportsDao implements Crud<Report, Long> {
+public class ReportDaoImpl implements ReportDao {
+
+    @Override
+    public List<Report> findAll() {
+        return null;
+    }
+
+    @Override
+    public Report save(Report o) {
+        return null;
+    }
+
+    @Override
+    public Report update(Report o) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(Long o) {
+        return false;
+    }
 
     @Override
     public Optional<Report> findById(Long reportId) {
@@ -42,28 +67,8 @@ public class ReportsDao implements Crud<Report, Long> {
         return Optional.ofNullable(report);
     }
 
-    @Override
-    public List<Report> findAll() {
-        return null;
-    }
-
-    @Override
-    public User save(Report o) {
-        return null;
-    }
-
-    @Override
-    public User update(Report o) {
-        return null;
-    }
-
-    @Override
-    public boolean delete(Report o) {
-        return false;
-    }
-
     public List<Report> findByParamWithUser(Long id, Date reportDate, TaxPeriod period,
-                                    Status status, SortField sortField, Integer pageNumber) throws SQLException {
+                                            Status status, SortField sortField, Integer pageNumber) {
 
         // ToDo: refactor filtering by period and status
 
@@ -122,7 +127,10 @@ public class ReportsDao implements Crud<Report, Long> {
                         .build();
                 reports.add(report);
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
+
         return reports;
     }
 
@@ -169,4 +177,5 @@ public class ReportsDao implements Crud<Report, Long> {
         }
         return data;
     }
+
 }

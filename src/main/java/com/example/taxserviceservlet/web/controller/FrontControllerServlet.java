@@ -45,12 +45,9 @@ public class FrontControllerServlet extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
 
-//        if (request.getParameter("redirect") != null) {
-//            response.sendRedirect(request.getParameter("redirect"));
-//            return;
-//        }
         String path = request.getRequestURI().replaceFirst("/tax_service_servlet_war_exploded/", "");
 
         Command command = commands.getOrDefault(path.trim(), (c) -> "/error/error404");

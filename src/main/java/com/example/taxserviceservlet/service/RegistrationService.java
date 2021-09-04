@@ -1,6 +1,7 @@
 package com.example.taxserviceservlet.service;
 
 import com.example.taxserviceservlet.dao.UserDao;
+import com.example.taxserviceservlet.dao.impl.UserDaoImpl;
 import com.example.taxserviceservlet.entity.User;
 import com.example.taxserviceservlet.exception.UserAlreadyExistsException;
 import com.example.taxserviceservlet.util.PojoConverter;
@@ -10,7 +11,8 @@ import java.sql.SQLException;
 
 public class RegistrationService {
 
-    private UserDao userDao = new UserDao();
+    private UserDao userDao = new UserDaoImpl();
+
     private static RegistrationService registrationService;
 
     public static RegistrationService getInstance() {

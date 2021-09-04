@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public interface Crud<T, ID> {
 
-    Optional<T> findById(ID id) throws SQLException;
-    List<T> findAll() throws SQLException;
-    User save(T o) throws SQLException;
-    User update(T o) throws SQLException;
-    boolean delete(T o) throws SQLException;
+    Optional<T> findById(ID id);
+    List<T> findAll();
+    T save(T o);
+    T update(T o);
+    boolean delete(ID o);
 
 }
