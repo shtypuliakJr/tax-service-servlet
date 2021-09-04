@@ -23,6 +23,7 @@ public class UserReportsCommand implements Command {
 
     public String reportsPost(HttpServletRequest request) {
         System.out.println("POST METHOD USER REPORTS");
+        System.out.println();
         return "/user/reports";
     }
 
