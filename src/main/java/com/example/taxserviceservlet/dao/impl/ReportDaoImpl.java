@@ -60,7 +60,7 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     public List<Report> findByParamWithUser(Long id, Date reportDate, TaxPeriod period,
-                                            Status status, SortField sortField, Integer pageNumber) {
+                                            Status status, SortField sortField) {
 
         // ToDo: refactor filtering by period and status
 
@@ -88,7 +88,6 @@ public class ReportDaoImpl implements ReportDao {
             preparedStatement.setString(6, String.valueOf(period));
             preparedStatement.setString(7, String.valueOf(status));
             preparedStatement.setString(8, String.valueOf(status));
-//            preparedStatement.setInt(9, (pageNumber - 1) * 5);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

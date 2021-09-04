@@ -17,6 +17,7 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+
         if (request.getMethod().equals("GET"))
             return "/login";
 
@@ -24,17 +25,22 @@ public class LoginCommand implements Command {
         String password = request.getParameter("password");
 
         HttpSession session = request.getSession();
+
         try {
-            session.setAttribute("user", userService.checkUserCredentials(email, password));
-            User user = (User) session.getAttribute("user");
+
+            User user = userService.checkUserPrincipal(email, password);
+            session.setAttribute("user", user);
             CommandUtility.addUserToUserContext(user);
+
             if (user.getUserRole().equals(UserRole.USER))
                 return "redirect:/user/reports";
-            else if (user.getUserRole().equals(UserRole.INSPECTOR)) {
+            else if (user.getUserRole().equals(UserRole.INSPECTOR))
                 return "redirect:/inspector/reports";
-            }
-        } catch (WrongPasswordException | NoUserFoundException e) {
-            request.setAttribute("exception", e.getMessage());
+
+
+        } catch (NoUserFoundException | WrongPasswordException e) {
+            request.setAttribute("exceptionLogin", e.getMessage());
+            request.setAttribute("email", email);
         }
         return "/login";
     }

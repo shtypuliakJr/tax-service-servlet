@@ -16,29 +16,18 @@ public class RegistrationService {
     private static RegistrationService registrationService;
 
     public static RegistrationService getInstance() {
-        if (registrationService == null) {
+
+        if (registrationService == null)
             registrationService = new RegistrationService();
-        }
+
         return registrationService;
     }
 
     public User registerUser(UserDTO userDTO) throws SQLException {
-        if (userDao.existsByEmail(userDTO.getEmail())) {
-            System.out.println("true in service");
-            throw new UserAlreadyExistsException("User with this email exists");
-        }
-        return userDao.save(PojoConverter.convertUserDtoToEntity(userDTO));
 
+        if (userDao.existsByEmail(userDTO.getEmail()))
+            throw new UserAlreadyExistsException("User with this email exists");
+
+        return userDao.save(PojoConverter.convertUserDtoToEntity(userDTO));
     }
 }
-
-//public class StudentService {
-//
-//    DaoFactory daoFactory = DaoFactory.getInstance();
-//
-//    public List<Student> getAllStudents(){
-//        try (StudentDao dao = daoFactory.createStudentDao()) {
-//            return dao.findAll();
-//        }
-//    }
-//}

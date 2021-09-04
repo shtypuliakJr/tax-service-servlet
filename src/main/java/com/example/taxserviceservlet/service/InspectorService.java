@@ -30,16 +30,17 @@ public class InspectorService {
     public static InspectorService getInstance() {
         if (inspectorService == null)
             inspectorService = new InspectorService();
+
         return inspectorService;
     }
 
 
     public List<ReportDTO> getReportsByFilterParam(Long id, Date reportDate, TaxPeriod period,
-                                                   Status status, SortField sortField, Integer pageNumber) {
+                                                   Status status, SortField sortField) {
 
         List<Report> reportList = null;
 
-        reportList = reportDao.findByParamWithUser(id, reportDate, period, status, sortField, pageNumber);
+        reportList = reportDao.findByParamWithUser(id, reportDate, period, status, sortField);
 
 
         if (reportList == null || reportList.isEmpty())

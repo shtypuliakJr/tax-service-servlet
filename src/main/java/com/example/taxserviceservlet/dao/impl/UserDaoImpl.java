@@ -6,19 +6,30 @@ import com.example.taxserviceservlet.dao.mapper.UserMapper;
 import com.example.taxserviceservlet.entity.User;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
 
 public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        String queryFindAll = "SELECT * FROM user";
 
-        return null;
+        String queryFindAll = "SELECT * FROM user";
+        List<User> users = new ArrayList<>();
+
+        Connection connection = DaoConnection.getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(queryFindAll)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                users.add(UserMapper.extractFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
     }
 
     @Override

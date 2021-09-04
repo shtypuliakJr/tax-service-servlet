@@ -22,16 +22,17 @@ public class UserService {
         return userService;
     }
 
-    public User checkUserCredentials(String email, String password)
+    public User checkUserPrincipal(String email, String password)
             throws WrongPasswordException, NoUserFoundException {
 
-        Optional<User> userDTO = userDao.checkUserDetails(email);
-        if (userDTO.isPresent()) {
-            if (!userDTO.get().getPassword().equals(password)) {
+        Optional<User> user = userDao.checkUserDetails(email);
+
+        if (user.isPresent()) {
+            if (!(user.get().getPassword().equals(password))) {
                 throw new WrongPasswordException("Wrong password");
             }
         }
-        return userDTO.orElseThrow(() -> new NoUserFoundException("No such user found"));
+        return user.orElseThrow(() -> new NoUserFoundException("No such user found"));
     }
 
     public UserDTO getUserInformationById(Long userId) throws NoUserFoundException {

@@ -5,14 +5,11 @@ import com.example.taxserviceservlet.entity.TaxPeriod;
 import com.example.taxserviceservlet.exception.NoReportsFoundException;
 import com.example.taxserviceservlet.service.InspectorService;
 import com.example.taxserviceservlet.web.controller.command.Command;
-import com.example.taxserviceservlet.web.dto.ReportDTO;
 import com.example.taxserviceservlet.web.dto.SortField;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
-import java.util.List;
-import java.util.Optional;
 
 public class InspectorReportsCommand implements Command {
 
@@ -32,49 +29,48 @@ public class InspectorReportsCommand implements Command {
 
     public String reportsGet(HttpServletRequest request) {
 
-        Long id = null;
-        Date date = null;
-        TaxPeriod period = null;
-        Status status = null;
-        SortField sortBy = null;
-        Integer pageNumber = 1;
+        Long id = (Long) request.getAttribute("userId");
+        Date date = (Date) request.getAttribute("date");
+        TaxPeriod period = (TaxPeriod) request.getAttribute("period");
+        Status status = (Status) request.getAttribute("status");
+        SortField sortBy = (SortField) request.getAttribute("sortBy");
 
-        String idParam = request.getParameter("userId");
-        String dateParam = request.getParameter("date");
-        String periodParam = request.getParameter("period");
-        String statusParam = request.getParameter("status");
-        String sortByParam = request.getParameter("sortBy");
-        String pageNumberParam = request.getParameter("page");
+//        String idParam = request.getParameter("userId");
+//        String dateParam = request.getParameter("date");
+//        String periodParam = request.getParameter("period");
+//        String statusParam = request.getParameter("status");
+//        String sortByParam = request.getParameter("sortBy");
+//        String pageNumberParam = request.getParameter("page");
 
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
 
-        if (!(idParam == null || idParam.isEmpty())) {
-            id = Long.valueOf(idParam);
-        }
-        if (!(dateParam == null || dateParam.isEmpty())) {
-            date = Date.valueOf(dateParam);
-        }
-        if (!(periodParam == null || periodParam.isEmpty())) {
-            period = TaxPeriod.valueOf(periodParam);
-        }
-        if (!(statusParam == null || statusParam.isEmpty())) {
-            status = Status.valueOf(statusParam);
-        }
-        if (!(sortByParam == null || sortByParam.isEmpty())) {
-            sortBy = SortField.valueOf(sortByParam);
-        }
-        if (!(pageNumberParam == null || pageNumberParam.isEmpty())) {
-            pageNumber = Integer.valueOf(pageNumberParam);
-        }
-
-        session.setAttribute("date", date);
-        session.setAttribute("period", period);
-        session.setAttribute("status", status);
-        session.setAttribute("sortBy", sortBy);
+//        if (!(idParam == null || idParam.isEmpty())) {
+//            id = Long.valueOf(idParam);
+//        }
+//        if (!(dateParam == null || dateParam.isEmpty())) {
+//            date = Date.valueOf(dateParam);
+//        }
+//        if (!(periodParam == null || periodParam.isEmpty())) {
+//            period = TaxPeriod.valueOf(periodParam);
+//        }
+//        if (!(statusParam == null || statusParam.isEmpty())) {
+//            status = Status.valueOf(statusParam);
+//        }
+//        if (!(sortByParam == null || sortByParam.isEmpty())) {
+//            sortBy = SortField.valueOf(sortByParam);
+//        }
+//        if (!(pageNumberParam == null || pageNumberParam.isEmpty())) {
+//            pageNumber = Integer.parseInt(pageNumberParam);
+//        }
+//
+//        session.setAttribute("date", date);
+//        session.setAttribute("period", period);
+//        session.setAttribute("status", status);
+//        session.setAttribute("sortBy", sortBy);
 
         try {
             request.setAttribute("reports", inspectorService
-                    .getReportsByFilterParam(id, date, period, status, sortBy, pageNumber));
+                    .getReportsByFilterParam(id, date, period, status, sortBy));
         } catch (NoReportsFoundException e) {
             request.setAttribute("noReportsFound", e.getMessage());
         }

@@ -1,14 +1,9 @@
 package com.example.taxserviceservlet.dao;
 
-import com.mysql.jdbc.Driver;
-
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 public class DaoConnection {
 
@@ -39,6 +34,7 @@ public class DaoConnection {
         try {
             if (connection != null)
                 connection.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class InspectorReportViewCommand implements Command {
 
-    ReportService reportService = new ReportService();
+    private final ReportService reportService = ReportService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {

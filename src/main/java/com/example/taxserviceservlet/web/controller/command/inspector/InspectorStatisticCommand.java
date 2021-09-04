@@ -8,12 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 public class InspectorStatisticCommand implements Command {
 
-    InspectorService inspectorService = InspectorService.getInstance();
+    private final InspectorService inspectorService = InspectorService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
         request.setAttribute("statisticData", inspectorService.getStatisticData());
-        System.out.println(inspectorService.getStatisticData());
         return "/inspector/statistic";
     }
 }

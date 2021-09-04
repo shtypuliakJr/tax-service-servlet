@@ -1,18 +1,20 @@
 package com.example.taxserviceservlet.dao;
 
-import com.example.taxserviceservlet.entity.*;
+import com.example.taxserviceservlet.entity.Report;
+import com.example.taxserviceservlet.entity.Status;
+import com.example.taxserviceservlet.entity.TaxPeriod;
 import com.example.taxserviceservlet.web.dto.SortField;
 
-import java.sql.*;
 import java.sql.Date;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public interface ReportDao extends Crud<Report, Long> {
 
-    public List<Report> findByParamWithUser(Long id, Date reportDate, TaxPeriod period,
-                                            Status status, SortField sortField, Integer pageNumber);
+    List<Report> findByParamWithUser(Long id, Date reportDate, TaxPeriod period,
+                                     Status status, SortField sortField);
 
-    public Map<String, Long> getStatisticDataReportsCount();
+    Map<String, Long> getStatisticDataReportsCount();
 
-    public Map<Integer, Long> getStatisticDataReportsPerYearCount();
+    Map<Integer, Long> getStatisticDataReportsPerYearCount();
 }
