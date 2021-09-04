@@ -1,15 +1,19 @@
 package com.example.taxserviceservlet.web.controller.command.inspector;
 
+import com.example.taxserviceservlet.entity.Status;
 import com.example.taxserviceservlet.exception.NoReportsFoundException;
+import com.example.taxserviceservlet.exception.ReportStatusException;
 import com.example.taxserviceservlet.service.InspectorService;
 import com.example.taxserviceservlet.service.ReportService;
 import com.example.taxserviceservlet.web.controller.command.Command;
+import com.example.taxserviceservlet.web.dto.ReportDTO;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class InspectorReportViewCommand implements Command {
 
     private final ReportService reportService = ReportService.getInstance();
+    private final InspectorService inspectorService = InspectorService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -23,14 +27,31 @@ public class InspectorReportViewCommand implements Command {
     }
 
     private String processPostMethod(HttpServletRequest request) {
-        return "/inspector/report-view";
+
+        String status = request.getParameter("status");
+        String comment = request.getParameter("comment");
+        ReportDTO report = (ReportDTO) request.getSession().getAttribute("report");
+        report.setComment(comment);
+        report.setStatus(status);
+
+        try {
+            inspectorService.setReportStatus(report, status, comment);
+        } catch (ReportStatusException e) {
+            request.setAttribute("error", e.getMessage());
+            request.setAttribute("comment", comment);
+            System.out.println("error");
+            return "/inspector/report-view";
+        }
+        System.out.println("here");
+        return "redirect:/inspector/reports";
     }
 
     public String processGetMethod(HttpServletRequest request) {
 
         try {
             long reportId = Long.parseLong(request.getParameter("reportId"));
-            request.setAttribute("report", reportService.getReportById(reportId));
+            ReportDTO report = reportService.getReportById(reportId);
+            request.getSession().setAttribute("report", report);
         } catch (NumberFormatException e) {
             request.setAttribute("errorInvalidParam", "Invalid parameter");
         } catch (NoReportsFoundException e) {

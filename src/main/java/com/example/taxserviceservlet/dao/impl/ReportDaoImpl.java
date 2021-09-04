@@ -2,6 +2,7 @@ package com.example.taxserviceservlet.dao.impl;
 
 import com.example.taxserviceservlet.dao.DaoConnection;
 import com.example.taxserviceservlet.dao.ReportDao;
+import com.example.taxserviceservlet.dao.mapper.ObjectMapper;
 import com.example.taxserviceservlet.dao.mapper.ReportMapper;
 import com.example.taxserviceservlet.dao.mapper.UserMapper;
 import com.example.taxserviceservlet.entity.Report;
@@ -15,6 +16,8 @@ import java.util.*;
 
 public class ReportDaoImpl implements ReportDao {
 
+    ObjectMapper<Report> mapper = new ReportMapper();
+
     @Override
     public List<Report> findAll() {
         return null;
@@ -27,6 +30,8 @@ public class ReportDaoImpl implements ReportDao {
 
     @Override
     public Report update(Report o) {
+        System.out.println("3");
+
         return null;
     }
 
@@ -49,7 +54,7 @@ public class ReportDaoImpl implements ReportDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                report = ReportMapper.extractFromResultSet(resultSet);
+                report = mapper.extractFromResultSet(resultSet);
             }
 
         } catch (SQLException e) {
@@ -61,8 +66,6 @@ public class ReportDaoImpl implements ReportDao {
 
     public List<Report> findByParamWithUser(Long id, Date reportDate, TaxPeriod period,
                                             Status status, SortField sortField) {
-
-        // ToDo: refactor filtering by period and status
 
         String sortBy = sortField == null ? "r.id " : sortField.fieldInTable + " " + sortField.direction;
 
@@ -92,7 +95,7 @@ public class ReportDaoImpl implements ReportDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Report report = ReportMapper.extractFromResultSet(resultSet);
+                Report report = mapper.extractFromResultSet(resultSet);
                 report.setUser(UserMapper.extractUserFromResultSetForReport(resultSet));
                 reports.add(report);
             }

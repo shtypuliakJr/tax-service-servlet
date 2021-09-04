@@ -7,9 +7,9 @@ import com.example.taxserviceservlet.entity.UserRole;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserMapper {
+public class UserMapper implements ObjectMapper<User>{
 
-    public static User extractFromResultSet(ResultSet resultSet) throws SQLException {
+    public User extractFromResultSet(ResultSet resultSet) throws SQLException {
         return User.builder()
                 .userId(resultSet.getLong("id"))
                 .firstName(resultSet.getString("first_name"))

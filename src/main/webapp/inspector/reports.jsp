@@ -55,7 +55,7 @@
     <div class="row">
         <div class="col-4">
             <div class="input-group">
-                <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
+                <form action="/inspector/reports" method="GET">
                     <div class="d-flex flex-row">
                         <input id="search" name="search" value="${search}"
                                class="form-control rounded" placeholder="Enter id, ipn, name, surname"

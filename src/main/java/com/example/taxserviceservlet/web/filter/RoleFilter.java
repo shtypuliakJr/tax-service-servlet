@@ -16,8 +16,7 @@ public class RoleFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         User user = (User) request.getSession().getAttribute("user");
         String requestURI = request.getRequestURI();
-        System.out.println("requestURI" + requestURI);
-
+        System.out.println("in role filter");
         if (user != null) {
             if (user.getUserRole().equals(UserRole.USER)) {
                 if (requestURI.contains("/user/"))

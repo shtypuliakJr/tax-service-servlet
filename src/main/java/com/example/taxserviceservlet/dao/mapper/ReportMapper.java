@@ -7,9 +7,9 @@ import com.example.taxserviceservlet.entity.TaxPeriod;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ReportMapper {
+public class ReportMapper implements ObjectMapper<Report> {
 
-    public static Report extractFromResultSet(ResultSet resultSet) throws SQLException {
+    public Report extractFromResultSet(ResultSet resultSet) throws SQLException  {
 
         return Report.builder()
                 .id(resultSet.getLong("id"))

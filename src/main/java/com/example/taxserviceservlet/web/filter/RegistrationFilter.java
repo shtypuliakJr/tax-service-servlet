@@ -11,7 +11,6 @@ public class RegistrationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("in reg filter");
         AtomicBoolean isParamCorrect = new AtomicBoolean(true);
         servletRequest.getParameterMap().forEach((k, v) -> {
             if (v[0].equals("")) {

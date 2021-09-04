@@ -2,6 +2,7 @@ package com.example.taxserviceservlet.dao.impl;
 
 import com.example.taxserviceservlet.dao.DaoConnection;
 import com.example.taxserviceservlet.dao.UserDao;
+import com.example.taxserviceservlet.dao.mapper.ObjectMapper;
 import com.example.taxserviceservlet.dao.mapper.UserMapper;
 import com.example.taxserviceservlet.entity.User;
 
@@ -11,6 +12,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class UserDaoImpl implements UserDao {
+
+    ObjectMapper<User> mapper = new UserMapper();
 
     @Override
     public List<User> findAll() {
@@ -23,7 +26,7 @@ public class UserDaoImpl implements UserDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(queryFindAll)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                users.add(UserMapper.extractFromResultSet(resultSet));
+                users.add(mapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +56,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = UserMapper.extractFromResultSet(resultSet);
+                user = mapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,7 +94,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = UserMapper.extractFromResultSet(resultSet);
+                user = mapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException throwable) {
             throwable.printStackTrace();
