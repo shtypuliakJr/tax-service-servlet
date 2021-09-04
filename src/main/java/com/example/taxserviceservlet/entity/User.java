@@ -27,6 +27,10 @@ public class User {
 
     private UserRole userRole;
 
+    public static Builder builder() {
+        return new User.Builder();
+    }
+
     public static class Builder {
 
         private final User user;

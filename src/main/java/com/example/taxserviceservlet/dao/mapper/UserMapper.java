@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class UserMapper {
 
-    public static User setUser(ResultSet resultSet) throws SQLException {
-        return new User.Builder()
+    public static User extractFromResultSet(ResultSet resultSet) throws SQLException {
+        return User.builder()
                 .userId(resultSet.getLong("id"))
                 .firstName(resultSet.getString("first_name"))
                 .lastName(resultSet.getString("last_name"))
@@ -24,4 +24,14 @@ public class UserMapper {
                 .dateOfRegistration(resultSet.getDate("date"))
                 .build();
     }
+
+    public static User extractUserFromResultSetForReport(ResultSet resultSet) throws SQLException {
+        return User.builder()
+                .userId(resultSet.getLong("user_id"))
+                .firstName(resultSet.getString("first_name"))
+                .lastName(resultSet.getString("last_name"))
+                .ipn(resultSet.getString("ipn"))
+                .build();
+    }
+
 }

@@ -2,10 +2,11 @@ package com.example.taxserviceservlet.dao.impl;
 
 import com.example.taxserviceservlet.dao.DaoConnection;
 import com.example.taxserviceservlet.dao.ReportDao;
+import com.example.taxserviceservlet.dao.mapper.ReportMapper;
+import com.example.taxserviceservlet.dao.mapper.UserMapper;
 import com.example.taxserviceservlet.entity.Report;
 import com.example.taxserviceservlet.entity.Status;
 import com.example.taxserviceservlet.entity.TaxPeriod;
-import com.example.taxserviceservlet.entity.User;
 import com.example.taxserviceservlet.web.dto.SortField;
 
 import java.sql.*;
@@ -48,18 +49,9 @@ public class ReportDaoImpl implements ReportDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                report = Report.builder()
-                        .id(resultSet.getLong("id"))
-                        .income(resultSet.getInt("income"))
-                        .taxRate(resultSet.getInt("tax_rate"))
-                        .taxPeriod(TaxPeriod.valueOf(resultSet.getString("tax_period")))
-                        .status(Status.valueOf(resultSet.getString("status")))
-                        .year(resultSet.getInt("year"))
-                        .comment(resultSet.getString("comment"))
-                        .reportDate(resultSet.getDate("report_date"))
-                        .userId(resultSet.getLong("user_id"))
-                        .build();
+                report = ReportMapper.extractFromResultSet(resultSet);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
             return Optional.empty();
@@ -82,13 +74,6 @@ public class ReportDaoImpl implements ReportDao {
                 "AND r.status = (IF(? = 'null', r.status, ?))" +
                 ") rr left join user u on rr.user_id = u.id order by " + sortBy;
 
-//        String query = "select * from report r " +
-//                "WHERE r.user_id = (CASE WHEN ? IS NULL THEN r.user_id ELSE ? END)" +
-//                " AND r.report_date = (CASE WHEN ? IS NULL THEN r.report_date ELSE ? END)" +
-//                " AND r.tax_period = (CASE WHEN ? = 'null' THEN r.tax_period ELSE ? END)" +
-//                " AND r.status = (CASE WHEN ? = 'null' THEN r.status ELSE ? END)" +
-//                " ORDER BY " + sortBy + " LIMIT 5 OFFSET ?";
-
         List<Report> reports = new ArrayList<>();
 
         Connection connection = DaoConnection.getConnection();
@@ -108,23 +93,8 @@ public class ReportDaoImpl implements ReportDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Report report = new Report.Builder()
-                        .id(resultSet.getLong("id"))
-                        .taxPeriod(TaxPeriod.valueOf(resultSet.getString("tax_period")))
-                        .year(resultSet.getInt("year"))
-                        .income(resultSet.getInt("income"))
-                        .taxRate(resultSet.getInt("tax_rate"))
-                        .reportDate(resultSet.getDate("report_date"))
-                        .status(Status.valueOf(resultSet.getString("status")))
-                        .comment(resultSet.getString("comment"))
-                        .userId(resultSet.getLong("user_id"))
-                        .user(new User.Builder()
-                                .userId(resultSet.getLong("user_id"))
-                                .firstName(resultSet.getString("first_name"))
-                                .lastName(resultSet.getString("last_name"))
-                                .ipn(resultSet.getString("ipn"))
-                                .build())
-                        .build();
+                Report report = ReportMapper.extractFromResultSet(resultSet);
+                report.setUser(UserMapper.extractUserFromResultSetForReport(resultSet));
                 reports.add(report);
             }
         } catch (SQLException throwables) {

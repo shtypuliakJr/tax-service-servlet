@@ -16,6 +16,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
+        String queryFindAll = "SELECT * FROM user";
+
         return null;
     }
 
@@ -40,7 +42,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = UserMapper.setUser(resultSet);
+                user = UserMapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,7 +72,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> checkUserDetails(String email) {
 
-        String findByEmail = "SELECT * FROM user WHERE email = ?;";
+        String findByEmail = "SELECT * FROM user WHERE email = ?";
         Connection connection = DaoConnection.getConnection();
         User user = null;
 
@@ -78,7 +80,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = UserMapper.setUser(resultSet);
+                user = UserMapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException throwable) {
             throwable.printStackTrace();
