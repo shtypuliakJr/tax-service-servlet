@@ -12,11 +12,12 @@ import java.util.StringTokenizer;
 @WebFilter(urlPatterns = {"/user/*", "/inspector/*"})
 public class RoleFilter implements Filter {
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         User user = (User) request.getSession().getAttribute("user");
         String requestURI = request.getRequestURI();
-        System.out.println("in role filter");
+
         if (user != null) {
             if (user.getUserRole().equals(UserRole.USER)) {
                 if (requestURI.contains("/user/"))
@@ -31,6 +32,5 @@ public class RoleFilter implements Filter {
                     request.getRequestDispatcher("/error/error.jsp").forward(servletRequest, servletResponse);
             }
         }
-        request.getRequestDispatcher("/error/error.jsp").forward(servletRequest, servletResponse);
     }
 }
