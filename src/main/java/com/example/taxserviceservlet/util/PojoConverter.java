@@ -51,6 +51,7 @@ public class PojoConverter {
                 .reportDate(report.getReportDate())
                 .comment(report.getComment())
                 .userId(report.getUserId())
+                .user(PojoConverter.convertUserEntityToDto(report.getUser()))
                 .build();
     }
 

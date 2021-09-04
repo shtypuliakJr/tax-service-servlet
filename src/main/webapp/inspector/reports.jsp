@@ -71,12 +71,17 @@
             <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
                 <label for="date">
                     Select date:
-                    <input type="date" id="date" name="date" min="2010-01-01" max="2021-12-31"/>
+                    <input type="date" id="date" name="date" min="2010-01-01" max="2021-12-31"
+                    value="${sessionScope.date}"
+                    />
                 </label>
                 <select id="period" name="period" class="form-select" aria-label="Default select example">
                     <option selected value="">Select period</option>
                     <c:forEach var="period" items="${TaxPeriod.values()}">
-                        <option label="${period}" value="${period}">..</option>
+                        <option label="${period}"
+                                value="${period}" <c:if test="${period == sessionScope.period}"> selected </c:if>>
+                            ..
+                        </option>
                     </c:forEach>
 
                 </select>
@@ -84,14 +89,20 @@
                 <select id="status" name="status" class="form-select" aria-label="Default select example">
                     <option selected value="">Select status</option>
                     <c:forEach var="status" items="${Status.values()}">
-                        <option label="${status}" value="${status}">..</option>
+                        <option label="${status}"
+                                value="${status}" <c:if test="${status == sessionScope.status}"> selected </c:if>>
+                            ..
+                        </option>
                     </c:forEach>
                 </select>
 
                 <select id="sortField" name="sortBy" class="form-select" aria-label="Default select example">
                     <option value="">Select sorting field</option>
                     <c:forEach var="sortField" items="${SortField.values()}">
-                        <option label="${sortField}" value="${sortField}">..</option>
+                        <option label="${sortField}"
+                                value="${sortField}" <c:if test="${sortField == sessionScope.sortBy}"> selected </c:if>>
+                            ..
+                        </option>
                     </c:forEach>
 
                 </select>
@@ -151,7 +162,6 @@
                     </td>
                 </tr>
             </c:forEach>
-
             </tbody>
         </table>
     </div>

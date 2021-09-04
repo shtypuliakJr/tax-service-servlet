@@ -22,7 +22,6 @@ public class DaoConnection {
             String datasourceUsername = "root";
             String datasourcePassword = "password";
 
-            System.out.println(datasourceDriver + " " + datasourceUrl);
             try {
                 Class.forName(datasourceDriver).getDeclaredConstructor().newInstance();
 

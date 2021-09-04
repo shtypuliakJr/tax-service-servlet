@@ -62,20 +62,28 @@ public class ReportsDao implements Crud<Report, Long> {
         return false;
     }
 
-    public List<Report> findByParam(Long id, Date reportDate, TaxPeriod period,
-                                    Status status, SortField sortField) throws SQLException {
+    public List<Report> findByParamWithUser(Long id, Date reportDate, TaxPeriod period,
+                                    Status status, SortField sortField, Integer pageNumber) throws SQLException {
 
         // ToDo: refactor filtering by period and status
 
-        String sortBy = sortField == null ? "rr.id" : sortField.fieldInTable + " " + sortField.direction;
+        String sortBy = sortField == null ? "r.id " : sortField.fieldInTable + " " + sortField.direction;
 
         String query = "select rr.*, u.first_name, u.last_name, u.ipn " +
                 "FROM ( select r.* from report r " +
-                "WHERE r.user_id = (CASE WHEN ? IS NULL THEN r.user_id ELSE ? END)" +
-                "AND r.report_date = (CASE WHEN ? IS NULL THEN r.report_date ELSE ? END)" +
-                "AND r.tax_period = (CASE WHEN ? = 'null' THEN r.tax_period ELSE ? END)" +
-                "AND r.status = (CASE WHEN ? = 'null' THEN r.status ELSE ? END)" +
+                "WHERE r.user_id = (IF(? IS NULL, r.user_id, ?))" +
+                "AND r.report_date = (IF(? IS NULL, r.report_date, ?))" +
+                "AND r.tax_period = (IF(? = 'null', r.tax_period, ?))" +
+                "AND r.status = (IF(? = 'null', r.status, ?))" +
                 ") rr left join user u on rr.user_id = u.id order by " + sortBy;
+
+//        String query = "select * from report r " +
+//                "WHERE r.user_id = (CASE WHEN ? IS NULL THEN r.user_id ELSE ? END)" +
+//                " AND r.report_date = (CASE WHEN ? IS NULL THEN r.report_date ELSE ? END)" +
+//                " AND r.tax_period = (CASE WHEN ? = 'null' THEN r.tax_period ELSE ? END)" +
+//                " AND r.status = (CASE WHEN ? = 'null' THEN r.status ELSE ? END)" +
+//                " ORDER BY " + sortBy + " LIMIT 5 OFFSET ?";
+
         List<Report> reports = new ArrayList<>();
 
         Connection connection = DaoConnection.getConnection();
@@ -90,6 +98,7 @@ public class ReportsDao implements Crud<Report, Long> {
             preparedStatement.setString(6, String.valueOf(period));
             preparedStatement.setString(7, String.valueOf(status));
             preparedStatement.setString(8, String.valueOf(status));
+//            preparedStatement.setInt(9, (pageNumber - 1) * 5);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

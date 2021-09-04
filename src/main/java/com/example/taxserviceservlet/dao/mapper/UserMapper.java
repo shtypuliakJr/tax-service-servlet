@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMapper {
+
     public static User setUser(ResultSet resultSet) throws SQLException {
         return new User.Builder()
                 .userId(resultSet.getLong("id"))

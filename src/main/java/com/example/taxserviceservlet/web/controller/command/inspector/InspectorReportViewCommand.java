@@ -14,6 +14,20 @@ public class InspectorReportViewCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
+        if (request.getMethod().equals("GET")) {
+            return processGetMethod(request);
+        } else if (request.getMethod().equals("POST")) {
+            return processPostMethod(request);
+        }
+        return null;
+    }
+
+    private String processPostMethod(HttpServletRequest request) {
+        return "/inspector/report-view";
+    }
+
+    public String processGetMethod(HttpServletRequest request) {
+
         try {
             long reportId = Long.parseLong(request.getParameter("reportId"));
             request.setAttribute("report", reportService.getReportById(reportId));

@@ -22,6 +22,7 @@ public class LoginCommand implements Command {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
         HttpSession session = request.getSession();
         try {
             session.setAttribute("user", userService.checkUserCredentials(email, password));

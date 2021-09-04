@@ -36,6 +36,7 @@ public class UserDao implements Crud<User, Long> {
     }
 
     public boolean existsByEmail(String email) {
+
         String findByEmail = "SELECT * FROM user WHERE email = ?;";
         Connection connection = DaoConnection.getConnection();
 
@@ -53,6 +54,7 @@ public class UserDao implements Crud<User, Long> {
     }
 
     public Optional<User> checkUserDetails(String email) {
+
         String findByEmail = "SELECT * FROM user WHERE email = ?;";
         Connection connection = DaoConnection.getConnection();
         User user = null;
@@ -80,6 +82,7 @@ public class UserDao implements Crud<User, Long> {
         String insert = "INSERT INTO user (first_name, last_name, email, user_password, age, ipn, " +
                 "personality, address, date, user_role, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
+
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());

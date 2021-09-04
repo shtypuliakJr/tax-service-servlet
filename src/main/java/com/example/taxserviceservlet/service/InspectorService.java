@@ -10,7 +10,6 @@ import com.example.taxserviceservlet.util.PojoConverter;
 import com.example.taxserviceservlet.web.dto.ReportDTO;
 import com.example.taxserviceservlet.web.dto.SortField;
 import com.example.taxserviceservlet.web.dto.StatisticDTO;
-import com.example.taxserviceservlet.web.dto.UserDTO;
 
 import java.sql.SQLException;
 import java.sql.Date;
@@ -34,12 +33,12 @@ public class InspectorService {
 
 
     public List<ReportDTO> getReportsByFilterParam(Long id, Date reportDate, TaxPeriod period,
-                                                   Status status, SortField sortField) {
+                                                   Status status, SortField sortField, Integer pageNumber) {
 
         List<Report> reportList = null;
 
         try {
-            reportList = reportsDao.findByParam(id, reportDate, period, status, sortField);
+            reportList = reportsDao.findByParamWithUser(id, reportDate, period, status, sortField, pageNumber);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

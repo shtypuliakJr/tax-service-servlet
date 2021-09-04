@@ -20,8 +20,8 @@ class ReportsDaoTest {
     @Test
     void find_reports_by_param(Long id, Date reportDate, TaxPeriod period,
                                Status status, SortField sortField) throws SQLException {
-
-        List<Report> byParam = reportsDao.findByParam(id, reportDate, period, status, sortField);
-        System.out.println(byParam);
+//
+//        List<Report> byParam = reportsDao.findByParam(id, reportDate, period, status, sortField);
+//        System.out.println(byParam);
     }
 }
