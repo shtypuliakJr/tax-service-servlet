@@ -86,8 +86,8 @@
             <tr>
                 <td class="text-center" colspan="9">
                     <div>
-                        <c:if test="${requestScope.noReportsFound != null}">
-                            <b><c:out value="${requestScope.noReportsFound}"/></b>
+                        <c:if test="${requestScope.noReportsFoundException != null}">
+                            <b><c:out value="${requestScope.noReportsFoundException}"/></b>
                         </c:if>
                     </div>
                 </td>

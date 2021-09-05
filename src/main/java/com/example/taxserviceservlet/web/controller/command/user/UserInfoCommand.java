@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserInfoCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
+
         return "/user/user-info";
     }
 }

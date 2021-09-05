@@ -38,6 +38,7 @@ public class InspectorReportsCommand implements Command {
         } catch (NoReportsFoundException e) {
             request.setAttribute("noReportsFound", e.getMessage());
         }
-        return "/inspector/reports";
+
+        return "/user/reports";
     }
 }

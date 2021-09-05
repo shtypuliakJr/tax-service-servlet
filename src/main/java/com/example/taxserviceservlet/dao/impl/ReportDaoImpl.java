@@ -35,7 +35,7 @@ public class ReportDaoImpl implements ReportDao {
 
         Connection connection = DaoConnection.getConnection();
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(updateReportQuery)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateReportQuery)) {
 
             preparedStatement.setString(1, report.getComment());
             preparedStatement.setString(2, String.valueOf(report.getStatus()));
@@ -84,13 +84,13 @@ public class ReportDaoImpl implements ReportDao {
 
         String sortBy = sortField == null ? "r.id " : sortField.fieldInTable + " " + sortField.direction;
 
-        String query = "select rr.*, u.first_name, u.last_name, u.ipn " +
-                "FROM ( select r.* from report r " +
+        String query = "SELECT rr.*, u.first_name, u.last_name, u.ipn " +
+                "FROM ( SELECT r.* FROM report r " +
                 "WHERE r.user_id = (IF(? IS NULL, r.user_id, ?))" +
                 "AND r.report_date = (IF(? IS NULL, r.report_date, ?))" +
                 "AND r.tax_period = (IF(? = 'null', r.tax_period, ?))" +
                 "AND r.status = (IF(? = 'null', r.status, ?))" +
-                ") rr left join user u on rr.user_id = u.id order by " + sortBy;
+                ") rr LEFT JOIN user u ON rr.user_id = u.id ORDER BY " + sortBy;
 
         List<Report> reports = new ArrayList<>();
 
@@ -118,6 +118,46 @@ public class ReportDaoImpl implements ReportDao {
             throwables.printStackTrace();
         }
 
+        return reports;
+    }
+
+    public List<Report> findByParam(Long id, Date reportDate, TaxPeriod period,
+                                    Status status, SortField sortField) {
+
+        String sortBy = sortField == null ? "r.id " : sortField.fieldInTable + " " + sortField.direction;
+        System.out.println("in dao");
+        String query = "SELECT r.* FROM report r" +
+                " WHERE r.user_id = (IF(? IS NULL, r.user_id, ?))" +
+                " AND r.report_date = (IF(? IS NULL, r.report_date, ?))" +
+                " AND r.tax_period = (IF(? = 'null', r.tax_period, ?))" +
+                " AND r.status = (IF(? = 'null', r.status, ?))" +
+                " ORDER BY " + sortBy;
+
+        List<Report> reports = new ArrayList<>();
+
+        Connection connection = DaoConnection.getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setObject(1, id);
+            preparedStatement.setObject(2, id);
+            preparedStatement.setDate(3, reportDate);
+            preparedStatement.setDate(4, reportDate);
+            preparedStatement.setString(5, String.valueOf(period));
+            preparedStatement.setString(6, String.valueOf(period));
+            preparedStatement.setString(7, String.valueOf(status));
+            preparedStatement.setString(8, String.valueOf(status));
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                reports.add(mapper.extractFromResultSet(resultSet));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("dao return");
         return reports;
     }
 
@@ -164,5 +204,4 @@ public class ReportDaoImpl implements ReportDao {
         }
         return data;
     }
-
 }

@@ -14,6 +14,9 @@ public interface ReportDao extends Crud<Report, Long> {
     List<Report> findByParamWithUser(Long id, Date reportDate, TaxPeriod period,
                                      Status status, SortField sortField);
 
+    List<Report> findByParam(Long id, Date reportDate, TaxPeriod period,
+                                     Status status, SortField sortField);
+
     Map<String, Long> getStatisticDataReportsCount();
 
     Map<Integer, Long> getStatisticDataReportsPerYearCount();

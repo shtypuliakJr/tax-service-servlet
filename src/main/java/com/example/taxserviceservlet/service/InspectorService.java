@@ -24,10 +24,9 @@ public class InspectorService {
     ReportDao reportDao = new ReportDaoImpl();
     UserDao userDao = new UserDaoImpl();
 
-
     private static InspectorService inspectorService;
 
-    public static InspectorService getInstance() {
+    public static synchronized InspectorService getInstance() {
         if (inspectorService == null)
             inspectorService = new InspectorService();
 
@@ -47,7 +46,7 @@ public class InspectorService {
             throw new NoReportsFoundException("No reports found");
 
         return reportList.stream()
-                .map(PojoConverter::convertReportEntityToDTO)
+                .map((report) -> PojoConverter.convertReportEntityToDTO())
                 .collect(Collectors.toList());
     }
 
