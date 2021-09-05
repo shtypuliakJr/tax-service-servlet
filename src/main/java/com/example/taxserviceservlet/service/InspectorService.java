@@ -38,7 +38,7 @@ public class InspectorService {
     public List<ReportDTO> getReportsByFilterParam(Long id, Date reportDate, TaxPeriod period,
                                                    Status status, SortField sortField) {
 
-        List<Report> reportList = null;
+        List<Report> reportList;
 
         reportList = reportDao.findByParamWithUser(id, reportDate, period, status, sortField);
 
@@ -79,14 +79,11 @@ public class InspectorService {
         if (status == null || status.isEmpty())
             throw new ReportStatusException("Require status");
 
-        System.out.println("1");
-        System.out.println("Status in service " + Status.valueOf(status));
         if (Status.valueOf(status).equals(Status.DISAPPROVED) && comment == null)
             throw new ReportStatusException("Require comment");
 
-        reportDTO.setComment(comment);
+        reportDTO.setComment(comment.trim());
         reportDTO.setStatus(status);
-        System.out.println("2");
 
         return reportDao.update(PojoConverter.convertReportDTOToEntity(reportDTO));
     }

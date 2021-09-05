@@ -6,6 +6,7 @@ import com.example.taxserviceservlet.entity.UserRole;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -14,7 +15,9 @@ public class RoleFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         User user = (User) request.getSession().getAttribute("user");
         String requestURI = request.getRequestURI();
 
@@ -31,6 +34,8 @@ public class RoleFilter implements Filter {
                 else if (requestURI.contains("/user/"))
                     request.getRequestDispatcher("/error/error.jsp").forward(servletRequest, servletResponse);
             }
+        } else {
+            response.sendRedirect("/login");
         }
     }
 }

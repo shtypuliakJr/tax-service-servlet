@@ -29,10 +29,25 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public Report update(Report o) {
-        System.out.println("3");
+    public Report update(Report report) {
 
-        return null;
+        String updateReportQuery = "UPDATE report r SET r.comment = ?, r.status = ? WHERE r.id = ?";
+
+        Connection connection = DaoConnection.getConnection();
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(updateReportQuery)) {
+
+            preparedStatement.setString(1, report.getComment());
+            preparedStatement.setString(2, String.valueOf(report.getStatus()));
+            preparedStatement.setLong(3, report.getId());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return report;
     }
 
     @Override
