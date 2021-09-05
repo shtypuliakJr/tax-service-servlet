@@ -30,6 +30,10 @@ public class ReportDTO {
     
     private UserDTO userDTO;
 
+    public static Builder builder() {
+        return new ReportDTO.Builder();
+    }
+
     public static class Builder {
 
         ReportDTO report;

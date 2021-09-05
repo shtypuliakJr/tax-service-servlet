@@ -69,4 +69,8 @@ public class ReportService {
     public boolean deleteReportById(long reportId) {
         return reportDao.delete(reportId);
     }
+
+    public ReportDTO applyNewReport(ReportDTO report) {
+        return null;
+    }
 }
