@@ -40,6 +40,21 @@ public class PojoConverter {
                 .build();
     }
 
+    public static ReportDTO convertReportEntityToDTO(Report report, User user) {
+        return new ReportDTO.Builder()
+                .id(report.getId())
+                .income(report.getIncome())
+                .taxRate(report.getTaxRate())
+                .taxPeriod(report.getTaxPeriod())
+                .year(report.getYear())
+                .status(report.getStatus())
+                .reportDate(report.getReportDate())
+                .comment(report.getComment())
+                .userId(report.getUserId())
+                .user(PojoConverter.convertUserEntityToDto(user))
+                .build();
+    }
+
     public static ReportDTO convertReportEntityToDTO(Report report) {
         return new ReportDTO.Builder()
                 .id(report.getId())
@@ -51,7 +66,6 @@ public class PojoConverter {
                 .reportDate(report.getReportDate())
                 .comment(report.getComment())
                 .userId(report.getUserId())
-                .user(PojoConverter.convertUserEntityToDto(report.getUser()))
                 .build();
     }
 

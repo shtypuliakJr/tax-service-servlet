@@ -1,3 +1,6 @@
+<%@ page import="com.example.taxserviceservlet.entity.TaxPeriod" %>
+<%@ page import="com.example.taxserviceservlet.entity.Status" %>
+<%@ page import="com.example.taxserviceservlet.web.dto.SortField" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>

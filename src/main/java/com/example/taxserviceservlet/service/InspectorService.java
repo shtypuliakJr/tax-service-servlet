@@ -46,7 +46,7 @@ public class InspectorService {
             throw new NoReportsFoundException("No reports found");
 
         return reportList.stream()
-                .map((report) -> PojoConverter.convertReportEntityToDTO())
+                .map((report) -> PojoConverter.convertReportEntityToDTO(report, report.getUser()))
                 .collect(Collectors.toList());
     }
 

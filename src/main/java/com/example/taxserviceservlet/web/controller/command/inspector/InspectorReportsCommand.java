@@ -39,6 +39,6 @@ public class InspectorReportsCommand implements Command {
             request.setAttribute("noReportsFound", e.getMessage());
         }
 
-        return "/user/reports";
+        return "/inspector/reports";
     }
 }
