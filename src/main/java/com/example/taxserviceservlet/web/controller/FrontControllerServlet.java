@@ -54,8 +54,8 @@ public class FrontControllerServlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        String path = request.getRequestURI().replaceFirst("/tax_service_servlet_war_exploded/", "");
-
+        String path = request.getRequestURI().replaceFirst("/", "");
+//        tax_service_servlet_war_exploded/
         Command command = commands.getOrDefault(path.trim(), (c) -> "/error/error404");
         String page = "/error/error";
 
@@ -66,7 +66,7 @@ public class FrontControllerServlet extends HttpServlet {
         }
 
         if (page.contains("redirect:")) {
-            response.sendRedirect(page.replace("redirect:", "/tax_service_servlet_war_exploded"));
+            response.sendRedirect(page.replace("redirect:", ""));
         } else {
             request.getRequestDispatcher(page + ".jsp").forward(request, response);
         }
