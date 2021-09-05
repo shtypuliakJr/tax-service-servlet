@@ -39,10 +39,8 @@ public class InspectorReportViewCommand implements Command {
         } catch (ReportStatusException e) {
             request.setAttribute("error", e.getMessage());
             request.setAttribute("comment", comment);
-            System.out.println("error");
             return "/inspector/report-view";
         }
-        System.out.println("here");
         return "redirect:/inspector/reports";
     }
 

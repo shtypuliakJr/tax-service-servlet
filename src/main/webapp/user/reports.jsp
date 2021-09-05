@@ -18,8 +18,7 @@
 <div class="container">
     <div class="row">
         <div class="col-11">
-            <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
-                <input type="hidden" name="userId" value="${sessionScope.userId}"/>
+            <form action="${pageContext.request.contextPath}/user/reports" method="GET">
                 <label for="date">
                     Select date:
                     <input type="date" id="date" name="date" min="2010-01-01" max="2021-12-31"
@@ -60,8 +59,7 @@
             </form>
         </div>
         <div class="col-1">
-            <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
-                <input type="hidden" name="userId" value=""/>
+            <form action="${pageContext.request.contextPath}/user/reports" method="GET">
                 <input type="hidden" name="date" value=""/>
                 <input type="hidden" name="period" value=""/>
                 <input type="hidden" name="status" value=""/>
@@ -115,14 +113,14 @@
                             <div class="row">
 
                                 <div class="col-6">
-                                    <form action="/user/report-edit" class='form-inline' method="GET">
+                                    <form action="${pageContext.request.contextPath}/user/report-edit" class='form-inline' method="GET">
                                         <input type="submit" value="Edit"/>
                                     </form>
                                 </div>
 
                                 <div class="col-6">
-                                    <form action="/user/report-delete" class='form-inline' method="POST">
-                                        <input type="hidden" name="id" value="${report.id}">
+                                    <form action="${pageContext.request.contextPath}/user/report-delete" class='form-inline' method="POST">
+                                        <input type="hidden" name="reportId" value="${report.id}">
                                         <input type="submit" value="Delete"/>
                                     </form>
                                 </div>

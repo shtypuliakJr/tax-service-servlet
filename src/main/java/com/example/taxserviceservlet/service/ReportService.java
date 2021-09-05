@@ -35,7 +35,6 @@ public class ReportService {
 
         List<Report> reportList;
 
-        System.out.println("in service");
         reportList = reportDao.findByParam(id, reportDate, period, status, sortField);
 
         if (reportList == null || reportList.isEmpty())
@@ -61,13 +60,13 @@ public class ReportService {
 //                        .orElseThrow(() -> new NoReportsFoundException("No reports found by id"));
 //
 
-
-        System.out.println("In service");
-        System.out.println(report);
 //        return reportDao.findById(reportId)
 //                .map(PojoConverter::convertReportEntityToDTO)
 //                .orElseThrow(() -> new NoReportsFoundException("No reports found by id"));
         return PojoConverter.convertReportEntityToDTO(report.get());
     }
 
+    public boolean deleteReportById(long reportId) {
+        return reportDao.delete(reportId);
+    }
 }

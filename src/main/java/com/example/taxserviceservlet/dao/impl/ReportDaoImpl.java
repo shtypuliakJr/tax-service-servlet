@@ -51,8 +51,20 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public boolean delete(Long o) {
-        return false;
+    public boolean delete(Long id) {
+
+        String deleteReportQuery = "DELETE FROM report r WHERE r.id = ?";
+        Connection connection = DaoConnection.getConnection();
+        boolean isExecuted = false;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteReportQuery)) {
+            preparedStatement.setLong(1, id);
+            isExecuted = preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isExecuted;
     }
 
     @Override
@@ -125,7 +137,7 @@ public class ReportDaoImpl implements ReportDao {
                                     Status status, SortField sortField) {
 
         String sortBy = sortField == null ? "r.id " : sortField.fieldInTable + " " + sortField.direction;
-        System.out.println("in dao");
+
         String query = "SELECT r.* FROM report r" +
                 " WHERE r.user_id = (IF(? IS NULL, r.user_id, ?))" +
                 " AND r.report_date = (IF(? IS NULL, r.report_date, ?))" +
@@ -157,7 +169,6 @@ public class ReportDaoImpl implements ReportDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("dao return");
         return reports;
     }
 
@@ -172,6 +183,8 @@ public class ReportDaoImpl implements ReportDao {
         Connection connection = DaoConnection.getConnection();
 
         Map<String, Long> data = new TreeMap<>();
+
+        
         try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -194,6 +207,7 @@ public class ReportDaoImpl implements ReportDao {
         Connection connection = DaoConnection.getConnection();
 
         Map<Integer, Long> data = new TreeMap<>();
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

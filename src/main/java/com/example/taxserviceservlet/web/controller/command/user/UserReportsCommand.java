@@ -13,7 +13,7 @@ import java.sql.Date;
 
 public class UserReportsCommand implements Command {
 
-    ReportService reportService = ReportService.getInstance();
+    private final ReportService reportService = ReportService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -24,7 +24,6 @@ public class UserReportsCommand implements Command {
         Status status = (Status) request.getAttribute("status");
         SortField sortBy = (SortField) request.getAttribute("sortBy");
 
-
         try {
             request.setAttribute("reports",
                     reportService.getReportsByFilterParam(id, date, period, status, sortBy));
@@ -32,7 +31,6 @@ public class UserReportsCommand implements Command {
             request.setAttribute("noReportsFoundException", e.getMessage());
         }
 
-        System.out.println(id + " " + date);
         return "/user/reports";
     }
 }

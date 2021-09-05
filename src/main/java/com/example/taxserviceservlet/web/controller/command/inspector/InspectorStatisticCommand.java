@@ -12,7 +12,9 @@ public class InspectorStatisticCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+
         request.setAttribute("statisticData", inspectorService.getStatisticData());
+
         return "/inspector/statistic";
     }
 }

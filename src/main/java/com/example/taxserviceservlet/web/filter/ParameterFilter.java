@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 
-@WebFilter("/inspector/reports")
+@WebFilter(value = {"/user/reports", "/inspector/reports"})
 public class ParameterFilter implements Filter {
 
     @Override
@@ -21,14 +21,10 @@ public class ParameterFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
 
-        String idParam = request.getParameter("userId");
         String dateParam = request.getParameter("date");
         String periodParam = request.getParameter("period");
         String statusParam = request.getParameter("status");
         String sortByParam = request.getParameter("sortBy");
-
-        if (idParam != null)
-            session.setAttribute("userId", idParam.isEmpty() ? null : Long.valueOf(idParam));
 
         if (dateParam != null)
             session.setAttribute("date", dateParam.isEmpty() ? null : Date.valueOf(dateParam));
@@ -42,7 +38,6 @@ public class ParameterFilter implements Filter {
         if (sortByParam != null)
             session.setAttribute("sortBy", sortByParam.isEmpty() ? null : SortField.valueOf(sortByParam));
 
-        request.setAttribute("userId", session.getAttribute("userId"));
         request.setAttribute("date", session.getAttribute("date"));
         request.setAttribute("period", session.getAttribute("period"));
         request.setAttribute("status", session.getAttribute("status"));
