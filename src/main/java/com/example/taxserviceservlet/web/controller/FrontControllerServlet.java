@@ -1,6 +1,7 @@
 package com.example.taxserviceservlet.web.controller;
 
 import com.example.taxserviceservlet.web.controller.command.Command;
+import com.example.taxserviceservlet.web.controller.command.user.*;
 import com.example.taxserviceservlet.web.controller.command.app.LoginCommand;
 import com.example.taxserviceservlet.web.controller.command.app.LogoutCommand;
 import com.example.taxserviceservlet.web.controller.command.app.MainCommand;
@@ -10,7 +11,6 @@ import com.example.taxserviceservlet.web.controller.command.inspector.InspectorR
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorReportsCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorStatisticCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorUserViewCommand;
-import com.example.taxserviceservlet.web.controller.command.user.UserReportsCommand;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,12 +26,17 @@ public class FrontControllerServlet extends HttpServlet {
 
     @Override
     public void init() {
+
         commands.put("", new MainCommand());
         commands.put("registration", new RegistrationCommand());
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
 
         commands.put("user/reports", new UserReportsCommand());
+        commands.put("user/user-info", new UserInfoCommand());
+        commands.put("user/report-form", new UserReportApplyCommand());
+        commands.put("user/report-edit", new UserReportEditCommand());
+        commands.put("user/report-delete", new UserReportDeleteCommand());
 
         commands.put("inspector/reports", new InspectorReportsCommand());
         commands.put("inspector/statistic", new InspectorStatisticCommand());
@@ -55,7 +60,6 @@ public class FrontControllerServlet extends HttpServlet {
             throws IOException, ServletException {
 
         String path = request.getRequestURI().replaceFirst("/", "");
-//        tax_service_servlet_war_exploded/
         Command command = commands.getOrDefault(path.trim(), (c) -> "/error/error404");
         String page = "/error/error";
 

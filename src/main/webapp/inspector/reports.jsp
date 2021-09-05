@@ -144,7 +144,8 @@
                             <b><c:out value="${requestScope.noReportsFound}"/></b>
                         </c:if>
                     </div>
-            <tbody>
+                </td>
+            </tr>
             <c:forEach var="report" items="${requestScope.reports}">
 
                 <tr>
