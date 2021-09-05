@@ -22,18 +22,12 @@ public class RoleFilter implements Filter {
         String requestURI = request.getRequestURI();
 
         if (user != null) {
-            if (user.getUserRole().equals(UserRole.USER)) {
-                if (requestURI.contains("/user/"))
-                    filterChain.doFilter(servletRequest, servletResponse);
-                else if (requestURI.contains("/inspector/"))
-                    request.getRequestDispatcher("/error/error.jsp").forward(servletRequest, servletResponse);
-
-            } else if (user.getUserRole().equals(UserRole.INSPECTOR)) {
-                if (requestURI.contains("/inspector/"))
-                    filterChain.doFilter(servletRequest, servletResponse);
-                else if (requestURI.contains("/user/"))
-                    request.getRequestDispatcher("/error/error.jsp").forward(servletRequest, servletResponse);
-            }
+            if (user.getUserRole().equals(UserRole.USER) && requestURI.contains("/user/"))
+                filterChain.doFilter(servletRequest, servletResponse);
+            else if (user.getUserRole().equals(UserRole.INSPECTOR) && requestURI.contains("/inspector/"))
+                filterChain.doFilter(servletRequest, servletResponse);
+            else
+                request.getRequestDispatcher("/error/error.jsp").forward(servletRequest, servletResponse);
         } else {
             response.sendRedirect("/login");
         }

@@ -55,6 +55,7 @@ public class ReportDaoImpl implements ReportDao {
 
         String deleteReportQuery = "DELETE FROM report r WHERE r.id = ?";
         Connection connection = DaoConnection.getConnection();
+
         boolean isExecuted = false;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(deleteReportQuery)) {
@@ -71,9 +72,9 @@ public class ReportDaoImpl implements ReportDao {
     public Optional<Report> findById(Long reportId) {
 
         String findByIdQuery = "SELECT * FROM report WHERE id = ?";
+        Connection connection = DaoConnection.getConnection();
 
         Report report = null;
-        Connection connection = DaoConnection.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(findByIdQuery)) {
 
@@ -104,9 +105,9 @@ public class ReportDaoImpl implements ReportDao {
                 "AND r.status = (IF(? = 'null', r.status, ?))" +
                 ") rr LEFT JOIN user u ON rr.user_id = u.id ORDER BY " + sortBy;
 
-        List<Report> reports = new ArrayList<>();
-
         Connection connection = DaoConnection.getConnection();
+
+        List<Report> reports = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -145,9 +146,10 @@ public class ReportDaoImpl implements ReportDao {
                 " AND r.status = (IF(? = 'null', r.status, ?))" +
                 " ORDER BY " + sortBy;
 
+        Connection connection = DaoConnection.getConnection();
+
         List<Report> reports = new ArrayList<>();
 
-        Connection connection = DaoConnection.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -184,7 +186,7 @@ public class ReportDaoImpl implements ReportDao {
 
         Map<String, Long> data = new TreeMap<>();
 
-        
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

@@ -10,8 +10,11 @@ import java.util.logging.Logger;
 public class RegistrationFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+
         AtomicBoolean isParamCorrect = new AtomicBoolean(true);
+
         servletRequest.getParameterMap().forEach((k, v) -> {
             if (v[0].equals("")) {
                 isParamCorrect.set(false);
