@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class PojoConverter {
 
     public static User convertUserDtoToEntity(UserDTO userDTO) {
-
         return new User.Builder()
                 .firstName(userDTO.getFirstName())
                 .lastName(userDTO.getLastName())

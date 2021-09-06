@@ -31,6 +31,7 @@ public class ReportFormError {
 
     public boolean hasErrors(String field) {
         try {
+
             Field field1 = this.getClass().getDeclaredField(field);
             field1.setAccessible(true);
 

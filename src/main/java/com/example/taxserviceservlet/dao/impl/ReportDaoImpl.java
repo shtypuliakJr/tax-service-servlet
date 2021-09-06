@@ -24,8 +24,30 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public Report save(Report o) {
-        return null;
+    public Report save(Report report) {
+        String saveReportQuery = "INSERT INTO " +
+                "report (comment, income, status, report_date, tax_period, tax_rate, year, user_id) " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        Connection connection = DaoConnection.getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(saveReportQuery)) {
+
+            preparedStatement.setString(1, report.getComment());
+            preparedStatement.setInt(2, report.getIncome());
+            preparedStatement.setString(3, String.valueOf(report.getStatus()));
+            preparedStatement.setDate(4, report.getReportDate());
+            preparedStatement.setString(5, String.valueOf(report.getTaxPeriod()));
+            preparedStatement.setInt(6, report.getTaxRate());
+            preparedStatement.setInt(7, report.getYear());
+            preparedStatement.setLong(8, report.getUserId());
+
+            preparedStatement.execute();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return report;
     }
 
     @Override

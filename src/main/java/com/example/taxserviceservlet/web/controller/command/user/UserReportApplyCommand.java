@@ -1,5 +1,6 @@
 package com.example.taxserviceservlet.web.controller.command.user;
 
+import com.example.taxserviceservlet.entity.User;
 import com.example.taxserviceservlet.service.ReportService;
 import com.example.taxserviceservlet.web.controller.command.Command;
 import com.example.taxserviceservlet.web.dto.ReportDTO;
@@ -36,6 +37,9 @@ public class UserReportApplyCommand implements Command {
         }
 
         ReportDTO report = (ReportDTO) request.getAttribute("reportDTO");
+        User user = (User) request.getSession().getAttribute("user");
+        report.setUserId(user.getUserId());
+
         reportService.applyNewReport(report);
 
         return "redirect:/user/reports";

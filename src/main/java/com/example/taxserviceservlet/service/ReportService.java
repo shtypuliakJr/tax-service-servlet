@@ -14,6 +14,8 @@ import com.example.taxserviceservlet.web.dto.ReportDTO;
 import com.example.taxserviceservlet.web.dto.SortField;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,15 +56,7 @@ public class ReportService {
             Optional<User> byId = userDao.findById(report.get().getUserId());
             report.get().setUser(byId.get());
         }
-//
-//        reportDao.findById(reportId)
-//                        .map(rep -> rep.setUser(userDao.findById(report.get().getUserId()))
-//                        .orElseThrow(() -> new NoReportsFoundException("No reports found by id"));
-//
 
-//        return reportDao.findById(reportId)
-//                .map(PojoConverter::convertReportEntityToDTO)
-//                .orElseThrow(() -> new NoReportsFoundException("No reports found by id"));
         return PojoConverter.convertReportEntityToDTO(report.get());
     }
 
@@ -70,7 +64,15 @@ public class ReportService {
         return reportDao.delete(reportId);
     }
 
-    public ReportDTO applyNewReport(ReportDTO report) {
-        return null;
+    public Report applyNewReport(ReportDTO reportDTO) {
+
+        reportDTO.setStatus(String.valueOf(Status.PROCESSING));
+        reportDTO.setReportDate(Date.valueOf(LocalDate.now()));
+
+        Report report = PojoConverter.convertReportDTOToEntity(reportDTO);
+
+//        report.setReportDate(Date.valueOf(LocalDate.now()));
+
+        return reportDao.save(report);
     }
 }
