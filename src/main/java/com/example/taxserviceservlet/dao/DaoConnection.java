@@ -15,18 +15,21 @@ public class DaoConnection {
     private static final String datasourcePassword = "password";
 
     public static Connection getConnection() {
+
         if (connection == null) {
             synchronized (DaoConnection.class) {
                 try {
-                    Class.forName(datasourceDriver).getDeclaredConstructor().newInstance();
 
+                    Class.forName(datasourceDriver).getDeclaredConstructor().newInstance();
                     connection = DriverManager.getConnection(datasourceUrl, datasourceUsername, datasourcePassword);
+
                 } catch (ClassNotFoundException | SQLException | NoSuchMethodException |
                         IllegalAccessException | InstantiationException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }
         }
+
         return connection;
     }
 

@@ -6,8 +6,8 @@ import com.example.taxserviceservlet.dao.mapper.ObjectMapper;
 import com.example.taxserviceservlet.dao.mapper.UserMapper;
 import com.example.taxserviceservlet.entity.User;
 
-import java.sql.*;
 import java.sql.Date;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -24,10 +24,12 @@ public class UserDaoImpl implements UserDao {
         Connection connection = DaoConnection.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(queryFindAll)) {
+
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
+
+            while (resultSet.next())
                 users.add(mapper.extractFromResultSet(resultSet));
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,8 +51,9 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> findById(Long id) {
 
         String findById = "SELECT * FROM user WHERE id = ?";
-        Connection connection = DaoConnection.getConnection();
         User user = null;
+
+        Connection connection = DaoConnection.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(findById)) {
             preparedStatement.setLong(1, id);
@@ -61,6 +64,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return Optional.ofNullable(user);
     }
 
@@ -68,6 +72,7 @@ public class UserDaoImpl implements UserDao {
     public boolean existsByEmail(String email) {
 
         String findByEmail = "SELECT * FROM user WHERE email = ?;";
+
         Connection connection = DaoConnection.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(findByEmail)) {
@@ -80,6 +85,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
+
         return false;
     }
 
@@ -99,14 +105,18 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
+
         return Optional.ofNullable(user);
     }
 
     @Override
     public User save(User user) {
-        Connection connection = DaoConnection.getConnection();
+
         String insert = "INSERT INTO user (first_name, last_name, email, user_password, age, ipn, " +
                 "personality, address, date, user_role, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        Connection connection = DaoConnection.getConnection();
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
 
             preparedStatement.setString(1, user.getFirstName());
@@ -122,10 +132,12 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setBoolean(11, true);
 
             preparedStatement.executeUpdate();
+
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return null;
+
+        return user;
     }
 
     @Override
@@ -136,9 +148,10 @@ public class UserDaoImpl implements UserDao {
                 "       SUM(IF(u.user_role = 'INSPECTOR', 1, 0)) AS inspector_count" +
                 "       FROM user as u";
 
+        Map<String, Long> data = new TreeMap<>();
+
         Connection connection = DaoConnection.getConnection();
 
-        Map<String, Long> data = new TreeMap<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -151,6 +164,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return data;
     }
 }

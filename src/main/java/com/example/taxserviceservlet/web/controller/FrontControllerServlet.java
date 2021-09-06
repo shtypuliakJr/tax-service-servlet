@@ -1,7 +1,6 @@
 package com.example.taxserviceservlet.web.controller;
 
 import com.example.taxserviceservlet.web.controller.command.Command;
-import com.example.taxserviceservlet.web.controller.command.user.*;
 import com.example.taxserviceservlet.web.controller.command.app.LoginCommand;
 import com.example.taxserviceservlet.web.controller.command.app.LogoutCommand;
 import com.example.taxserviceservlet.web.controller.command.app.MainCommand;
@@ -11,6 +10,7 @@ import com.example.taxserviceservlet.web.controller.command.inspector.InspectorR
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorReportsCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorStatisticCommand;
 import com.example.taxserviceservlet.web.controller.command.inspector.InspectorUserViewCommand;
+import com.example.taxserviceservlet.web.controller.command.user.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

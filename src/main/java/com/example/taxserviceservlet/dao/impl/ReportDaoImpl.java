@@ -25,6 +25,7 @@ public class ReportDaoImpl implements ReportDao {
 
     @Override
     public Report save(Report report) {
+
         String saveReportQuery = "INSERT INTO " +
                 "report (comment, income, status, report_date, tax_period, tax_rate, year, user_id) " +
                 "values (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -47,6 +48,7 @@ public class ReportDaoImpl implements ReportDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         return report;
     }
 
@@ -172,7 +174,6 @@ public class ReportDaoImpl implements ReportDao {
 
         List<Report> reports = new ArrayList<>();
 
-
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setObject(1, id);
@@ -207,7 +208,6 @@ public class ReportDaoImpl implements ReportDao {
         Connection connection = DaoConnection.getConnection();
 
         Map<String, Long> data = new TreeMap<>();
-
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
             ResultSet resultSet = preparedStatement.executeQuery();

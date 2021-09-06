@@ -24,7 +24,4 @@ public class ReportMapper implements ObjectMapper<Report> {
                 .build();
 
     }
-
-
-    
 }
