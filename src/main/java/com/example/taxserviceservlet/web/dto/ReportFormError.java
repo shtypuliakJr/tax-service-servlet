@@ -42,4 +42,20 @@ public class ReportFormError {
         }
         return false;
     }
+
+    public boolean isIncomeInvalid() {
+        return isIncomeInvalid;
+    }
+
+    public boolean isTaxRateInvalid() {
+        return isTaxRateInvalid;
+    }
+
+    public boolean isPeriodInvalid() {
+        return isPeriodInvalid;
+    }
+
+    public boolean isYearInvalid() {
+        return isYearInvalid;
+    }
 }

@@ -9,7 +9,7 @@ import com.example.taxserviceservlet.entity.Status;
 import com.example.taxserviceservlet.entity.TaxPeriod;
 import com.example.taxserviceservlet.exception.NoReportsFoundException;
 import com.example.taxserviceservlet.exception.ReportStatusException;
-import com.example.taxserviceservlet.util.PojoConverter;
+import com.example.taxserviceservlet.util.PojoUtil;
 import com.example.taxserviceservlet.web.dto.ReportDTO;
 import com.example.taxserviceservlet.web.dto.SortField;
 import com.example.taxserviceservlet.web.dto.StatisticDTO;
@@ -33,7 +33,6 @@ public class InspectorService {
         return inspectorService;
     }
 
-
     public List<ReportDTO> getReportsByFilterParam(Long id, Date reportDate, TaxPeriod period,
                                                    Status status, SortField sortField) {
 
@@ -46,7 +45,7 @@ public class InspectorService {
             throw new NoReportsFoundException("No reports found");
 
         return reportList.stream()
-                .map((report) -> PojoConverter.convertReportEntityToDTO(report, report.getUser()))
+                .map((report) -> PojoUtil.convertReportEntityToDTO(report, report.getUser()))
                 .collect(Collectors.toList());
     }
 
@@ -84,6 +83,6 @@ public class InspectorService {
         reportDTO.setComment(comment.trim());
         reportDTO.setStatus(status);
 
-        return reportDao.update(PojoConverter.convertReportDTOToEntity(reportDTO));
+        return reportDao.update(PojoUtil.convertReportDTOToEntity(reportDTO));
     }
 }

@@ -1,10 +1,8 @@
 package com.example.taxserviceservlet.service;
 
 import com.example.taxserviceservlet.exception.UserAlreadyExistsException;
-import com.example.taxserviceservlet.util.PojoConverter;
+import com.example.taxserviceservlet.util.PojoUtil;
 import com.example.taxserviceservlet.web.dto.UserDTO;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -29,7 +27,7 @@ class RegistrationServiceTest {
 
     @Test
     void registerUser() throws SQLException {
-        assertEquals(userDTO, PojoConverter.convertUserEntityToDto(registrationService.registerUser(userDTO)));
+        assertEquals(userDTO, PojoUtil.convertUserEntityToDto(registrationService.registerUser(userDTO)));
     }
 
     @Test

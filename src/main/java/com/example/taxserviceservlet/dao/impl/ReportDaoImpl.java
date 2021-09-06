@@ -1,6 +1,6 @@
 package com.example.taxserviceservlet.dao.impl;
 
-import com.example.taxserviceservlet.dao.DaoConnection;
+import com.example.taxserviceservlet.dao.DaoConnector;
 import com.example.taxserviceservlet.dao.ReportDao;
 import com.example.taxserviceservlet.dao.mapper.ObjectMapper;
 import com.example.taxserviceservlet.dao.mapper.ReportMapper;
@@ -30,7 +30,7 @@ public class ReportDaoImpl implements ReportDao {
                 "report (comment, income, status, report_date, tax_period, tax_rate, year, user_id) " +
                 "values (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(saveReportQuery)) {
 
@@ -55,15 +55,24 @@ public class ReportDaoImpl implements ReportDao {
     @Override
     public Report update(Report report) {
 
-        String updateReportQuery = "UPDATE report r SET r.comment = ?, r.status = ? WHERE r.id = ?";
+        String updateReportQuery = "UPDATE report r SET r.comment = ?, r.income = ?, r.status = ?, " +
+                " r.report_date = ?, r.tax_period = ?, r.tax_rate = ?, r.year = ?, r.user_id = ? " +
+                " WHERE r.id = ?";
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateReportQuery)) {
 
             preparedStatement.setString(1, report.getComment());
-            preparedStatement.setString(2, String.valueOf(report.getStatus()));
-            preparedStatement.setLong(3, report.getId());
+            preparedStatement.setInt(2, report.getIncome());
+            preparedStatement.setString(3, String.valueOf(report.getStatus()));
+            preparedStatement.setDate(4, report.getReportDate());
+            preparedStatement.setString(5, String.valueOf(report.getTaxPeriod()));
+            preparedStatement.setInt(6, report.getTaxRate());
+            preparedStatement.setInt(7, report.getYear());
+            preparedStatement.setLong(8, report.getUserId());
+
+            preparedStatement.setLong(9, report.getId());
 
             preparedStatement.executeUpdate();
 
@@ -78,7 +87,7 @@ public class ReportDaoImpl implements ReportDao {
     public boolean delete(Long id) {
 
         String deleteReportQuery = "DELETE FROM report r WHERE r.id = ?";
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         boolean isExecuted = false;
 
@@ -96,7 +105,7 @@ public class ReportDaoImpl implements ReportDao {
     public Optional<Report> findById(Long reportId) {
 
         String findByIdQuery = "SELECT * FROM report WHERE id = ?";
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         Report report = null;
 
@@ -129,7 +138,7 @@ public class ReportDaoImpl implements ReportDao {
                 "AND r.status = (IF(? = 'null', r.status, ?))" +
                 ") rr LEFT JOIN user u ON rr.user_id = u.id ORDER BY " + sortBy;
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         List<Report> reports = new ArrayList<>();
 
@@ -170,7 +179,7 @@ public class ReportDaoImpl implements ReportDao {
                 " AND r.status = (IF(? = 'null', r.status, ?))" +
                 " ORDER BY " + sortBy;
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         List<Report> reports = new ArrayList<>();
 
@@ -205,7 +214,7 @@ public class ReportDaoImpl implements ReportDao {
                 " SUM(IF(r.status = 'DISAPPROVED', 1, 0)) AS disapproved_count" +
                 " FROM report AS r";
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         Map<String, Long> data = new TreeMap<>();
 
@@ -228,7 +237,7 @@ public class ReportDaoImpl implements ReportDao {
         String statisticReportsCountQuery =
                 "SELECT year, COUNT(*) AS count FROM report AS r GROUP BY r.year ORDER BY year";
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         Map<Integer, Long> data = new TreeMap<>();
 

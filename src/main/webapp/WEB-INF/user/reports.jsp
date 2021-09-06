@@ -113,13 +113,16 @@
                             <div class="row">
 
                                 <div class="col-6">
-                                    <form action="${pageContext.request.contextPath}/user/report-edit" class='form-inline' method="GET">
+                                    <form action="${pageContext.request.contextPath}/user/report-edit"
+                                          class='form-inline' method="GET">
+                                        <input type="hidden" name="reportId" value="${report.id}">
                                         <input type="submit" value="Edit"/>
                                     </form>
                                 </div>
 
                                 <div class="col-6">
-                                    <form action="${pageContext.request.contextPath}/user/report-delete" class='form-inline' method="POST">
+                                    <form action="${pageContext.request.contextPath}/user/report-delete"
+                                          class='form-inline' method="POST">
                                         <input type="hidden" name="reportId" value="${report.id}">
                                         <input type="submit" value="Delete"/>
                                     </form>

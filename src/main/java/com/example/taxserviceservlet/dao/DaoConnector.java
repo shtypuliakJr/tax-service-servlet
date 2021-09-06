@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DaoConnection {
+public class DaoConnector {
 
     private static Connection connection = null;
 
@@ -17,12 +17,10 @@ public class DaoConnection {
     public static Connection getConnection() {
 
         if (connection == null) {
-            synchronized (DaoConnection.class) {
+            synchronized (DaoConnector.class) {
                 try {
-
                     Class.forName(datasourceDriver).getDeclaredConstructor().newInstance();
                     connection = DriverManager.getConnection(datasourceUrl, datasourceUsername, datasourcePassword);
-
                 } catch (ClassNotFoundException | SQLException | NoSuchMethodException |
                         IllegalAccessException | InstantiationException | InvocationTargetException e) {
                     e.printStackTrace();

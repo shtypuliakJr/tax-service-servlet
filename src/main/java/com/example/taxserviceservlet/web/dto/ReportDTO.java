@@ -1,10 +1,7 @@
 package com.example.taxserviceservlet.web.dto;
 
-import com.example.taxserviceservlet.entity.Report;
 import com.example.taxserviceservlet.entity.Status;
 import com.example.taxserviceservlet.entity.TaxPeriod;
-import com.example.taxserviceservlet.entity.User;
-import com.example.taxserviceservlet.util.PojoConverter;
 
 import java.sql.Date;
 

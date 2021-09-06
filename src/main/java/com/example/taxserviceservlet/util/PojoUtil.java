@@ -4,10 +4,7 @@ import com.example.taxserviceservlet.entity.*;
 import com.example.taxserviceservlet.web.dto.ReportDTO;
 import com.example.taxserviceservlet.web.dto.UserDTO;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
-
-public class PojoConverter {
+public class PojoUtil {
 
     public static User convertUserDtoToEntity(UserDTO userDTO) {
         return new User.Builder()
@@ -50,7 +47,7 @@ public class PojoConverter {
                 .reportDate(report.getReportDate())
                 .comment(report.getComment())
                 .userId(report.getUserId())
-                .user(PojoConverter.convertUserEntityToDto(user))
+                .user(PojoUtil.convertUserEntityToDto(user))
                 .build();
     }
 
@@ -81,4 +78,10 @@ public class PojoConverter {
                 .userId(reportDTO.getUserId())
                 .build();
     }
+
+//    public static ReportDTO copyFieldsEditForm(ReportDTO reportDTO, ReportDTO report) {
+//        re
+//        return report;
+//    }
+
 }

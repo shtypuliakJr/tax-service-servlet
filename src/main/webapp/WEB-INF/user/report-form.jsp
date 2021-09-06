@@ -27,7 +27,7 @@
                             <label for="income">Income:</label>
                             <input type="text" id="income" name="income" class="form-control"
                                    value="${param.get('income')}" required/>
-                            <c:if test="${requestScope.fields.hasErrors('isIncomeInvalid') || false}">
+                            <c:if test="${requestScope.fields.hasErrors('isIncomeInvalid')}">
                                 <div class="alert alert-error">
                                     <div class="alert alert-danger" role="alert">
                                         <div style="text-align: center" class="error-invalid">Invalid income value</div>
@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="taxRate">Tax rate,%:</label>
+                            <label for="taxRate">Tax rate, %:</label>
                             <input type="text" id="taxRate" name="taxRate" class="form-control"
                                    value="${param.get('taxRate')}" required/>
                             <c:if test="${requestScope.fields.hasErrors('isTaxRateInvalid')}">

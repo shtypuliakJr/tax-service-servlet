@@ -1,6 +1,6 @@
 package com.example.taxserviceservlet.dao.impl;
 
-import com.example.taxserviceservlet.dao.DaoConnection;
+import com.example.taxserviceservlet.dao.DaoConnector;
 import com.example.taxserviceservlet.dao.UserDao;
 import com.example.taxserviceservlet.dao.mapper.ObjectMapper;
 import com.example.taxserviceservlet.dao.mapper.UserMapper;
@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
         String queryFindAll = "SELECT * FROM user";
         List<User> users = new ArrayList<>();
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(queryFindAll)) {
 
@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
         String findById = "SELECT * FROM user WHERE id = ?";
         User user = null;
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(findById)) {
             preparedStatement.setLong(1, id);
@@ -73,7 +73,7 @@ public class UserDaoImpl implements UserDao {
 
         String findByEmail = "SELECT * FROM user WHERE email = ?;";
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(findByEmail)) {
             preparedStatement.setString(1, email);
@@ -93,7 +93,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> checkUserDetails(String email) {
 
         String findByEmail = "SELECT * FROM user WHERE email = ?";
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
         User user = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(findByEmail)) {
@@ -115,7 +115,7 @@ public class UserDaoImpl implements UserDao {
         String insert = "INSERT INTO user (first_name, last_name, email, user_password, age, ipn, " +
                 "personality, address, date, user_role, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
 
@@ -150,7 +150,7 @@ public class UserDaoImpl implements UserDao {
 
         Map<String, Long> data = new TreeMap<>();
 
-        Connection connection = DaoConnection.getConnection();
+        Connection connection = DaoConnector.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(statisticReportsCountQuery)) {
 

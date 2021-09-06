@@ -5,7 +5,7 @@ import com.example.taxserviceservlet.dao.impl.UserDaoImpl;
 import com.example.taxserviceservlet.entity.User;
 import com.example.taxserviceservlet.exception.NoUserFoundException;
 import com.example.taxserviceservlet.exception.WrongPasswordException;
-import com.example.taxserviceservlet.util.PojoConverter;
+import com.example.taxserviceservlet.util.PojoUtil;
 import com.example.taxserviceservlet.web.dto.UserDTO;
 
 import java.util.Optional;
@@ -38,7 +38,7 @@ public class UserService {
     public UserDTO getUserInformationById(Long userId) throws NoUserFoundException {
 
         return userDao.findById(userId)
-                .map(PojoConverter::convertUserEntityToDto)
+                .map(PojoUtil::convertUserEntityToDto)
                 .orElseThrow(() -> new NoUserFoundException("No user found by id"));
 
     }

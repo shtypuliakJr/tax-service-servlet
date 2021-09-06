@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
 
 @WebFilter(urlPatterns = {"/user/*", "/inspector/*"})
 public class RoleFilter implements Filter {
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
