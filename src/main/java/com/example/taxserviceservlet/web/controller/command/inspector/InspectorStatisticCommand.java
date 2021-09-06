@@ -15,6 +15,6 @@ public class InspectorStatisticCommand implements Command {
 
         request.setAttribute("statisticData", inspectorService.getStatisticData());
 
-        return "/inspector/statistic";
+        return "/WEB-INF/inspector/statistic";
     }
 }

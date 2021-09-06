@@ -13,6 +13,7 @@ public class InspectorUserViewCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+
         try {
             UserDTO userDTO = userService.getUserInformationById(Long.parseLong(request.getParameter("userId")));
             request.setAttribute("userDTO", userDTO);
@@ -21,6 +22,7 @@ public class InspectorUserViewCommand implements Command {
         } catch (NoUserFoundException e) {
             request.setAttribute("noUserFoundException", e.getMessage());
         }
-        return "/inspector/user-view";
+
+        return "/WEB-INF/inspector/user-view";
     }
 }

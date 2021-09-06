@@ -18,7 +18,7 @@ public class UserReportEditCommand implements Command {
 
     private String processGetRequest(HttpServletRequest request) {
 
-        return "/user/report-edit";
+        return "/WEB-INF/user/report-edit";
     }
 
     private String processPostRequest(HttpServletRequest request) {

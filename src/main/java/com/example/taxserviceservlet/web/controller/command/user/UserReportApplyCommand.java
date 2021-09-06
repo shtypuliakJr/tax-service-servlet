@@ -24,7 +24,7 @@ public class UserReportApplyCommand implements Command {
 
     private String processGetRequest(HttpServletRequest request) {
 
-        return "/user/report-form";
+        return "/WEB-INF/user/report-form";
     }
 
     private String processPostRequest(HttpServletRequest request) {
@@ -33,7 +33,7 @@ public class UserReportApplyCommand implements Command {
 
         if (formError.hasErrors()) {
             request.setAttribute("fields", formError);
-            return "/user/report-form";
+            return "/WEB-INF/user/report-form";
         }
 
         ReportDTO report = (ReportDTO) request.getAttribute("reportDTO");

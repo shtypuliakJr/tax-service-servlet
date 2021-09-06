@@ -8,6 +8,6 @@ public class UserInfoCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
-        return "/user/user-info";
+        return "/WEB-INF/user/user-info";
     }
 }

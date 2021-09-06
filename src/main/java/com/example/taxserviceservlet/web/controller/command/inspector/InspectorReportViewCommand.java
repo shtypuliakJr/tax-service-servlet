@@ -39,7 +39,7 @@ public class InspectorReportViewCommand implements Command {
         } catch (ReportStatusException e) {
             request.setAttribute("error", e.getMessage());
             request.setAttribute("comment", comment);
-            return "/inspector/report-view";
+            return "/WEB-INF/inspector/report-view";
         }
         return "redirect:/inspector/reports";
     }
@@ -55,6 +55,6 @@ public class InspectorReportViewCommand implements Command {
         } catch (NoReportsFoundException e) {
             request.setAttribute("noReportsFoundException", e.getMessage());
         }
-        return "/inspector/report-view";
+        return "/WEB-INF/inspector/report-view";
     }
 }

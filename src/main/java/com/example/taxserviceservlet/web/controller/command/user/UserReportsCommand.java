@@ -31,6 +31,6 @@ public class UserReportsCommand implements Command {
             request.setAttribute("noReportsFoundException", e.getMessage());
         }
 
-        return "/user/reports";
+        return "/WEB-INF/user/reports";
     }
 }

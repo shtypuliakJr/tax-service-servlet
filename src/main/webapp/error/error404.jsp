@@ -4,6 +4,8 @@
     <title>Error 404</title>
 </head>
 <body>
-Resource not found
+<div>
+    <b>Error 404. Resource not found</b>
+</div>
 </body>
 </html>
