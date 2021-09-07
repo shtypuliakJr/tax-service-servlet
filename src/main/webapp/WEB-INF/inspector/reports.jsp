@@ -19,67 +19,23 @@
 
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    <div class="form-group row">
-        <div class="col-md-5">
-            <form style="display: inline;" action="statistic" method="GET">
-                <button type="submit" class="btn btn-primary">Statistic</button>
-            </form>
-        </div>
-        <div class="col-md-5">
-            <form style="display: inline;" action="reports" method="GET">
-                <button type="submit" class="btn btn-primary">Reports</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="navbar-nav ml-auto">
-        <div class="form-group row">
-            <div class="col-sm-8">
-                <span>Inspector</span>
-                <p><c:out value="${sessionScope.user.email}"/></p>
-            </div>
-            <div class="col-sm-4">
-                <form style="display: inline;" action="${pageContext.request.contextPath}/logout" method="POST">
-                    <input class="btn btn-danger" type="submit" value="Logout"/>
-                </form>
-            </div>
-        </div>
-    </div>
-
-</nav>
-
+<%@include file="inspector-navbar.html" %>
 
 <div class="container">
-    <div class="row">
-        <div class="col-4">
-            <div class="input-group">
-                <form action="/inspector/reports" method="GET">
-                    <div class="d-flex flex-row">
-                        <input id="search" name="search" value="${search}"
-                               class="form-control rounded" placeholder="Enter id, ipn, name, surname"
-                               aria-label="Search" aria-describedby="search-addon"/>
-                        <button type="submit" class="btn btn-outline-primary">Search</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-11">
             <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
                 <input type="hidden" name="userId" value="${sessionScope.userId}"/>
                 <label for="date">
-                    Select date:
+                    <fmt:message key="reports.search.select.date"/>
                     <input type="date" id="date" name="date" min="2010-01-01" max="2021-12-31"
-                           value="${sessionScope.date}"
-                    />
+                           value="${sessionScope.date}"/>
                 </label>
                 <select id="period" name="period" class="form-select" aria-label="Default select example">
-                    <option selected value="">Select period</option>
+                    <option selected value=""><fmt:message key="reports.search.select.period"/></option>
                     <c:forEach var="period" items="${TaxPeriod.values()}">
-                        <option label="${period}"
+                        <option label="<fmt:message key="reports.period.${period}"/>"
                                 value="${period}" <c:if test="${period == sessionScope.period}"> selected </c:if>>
                             ..
                         </option>
@@ -88,9 +44,9 @@
                 </select>
 
                 <select id="status" name="status" class="form-select" aria-label="Default select example">
-                    <option selected value="">Select status</option>
+                    <option selected value=""><fmt:message key="reports.search.select.status"/></option>
                     <c:forEach var="status" items="${Status.values()}">
-                        <option label="${status}"
+                        <option label="<fmt:message key="reports.status.${status}"/>"
                                 value="${status}" <c:if test="${status == sessionScope.status}"> selected </c:if>>
                             ..
                         </option>
@@ -98,15 +54,15 @@
                 </select>
 
                 <select id="sortField" name="sortBy" class="form-select" aria-label="Default select example">
-                    <option value="">Select sorting field</option>
+                    <option value=""><fmt:message key="reports.search.select.sorting.field"/></option>
                     <c:forEach var="sortField" items="${SortField.values()}">
-                        <option label="${sortField}"
+                        <option label="<fmt:message key="reports.sortField.${sortField}"/>"
                                 value="${sortField}" <c:if test="${sortField == sessionScope.sortBy}"> selected </c:if>>
                             ..
                         </option>
                     </c:forEach>
                 </select>
-                <button type="submit" class="btn btn-outline-primary">Filter</button>
+                <button type="submit" class="btn btn-outline-primary"><fmt:message key="report.filter"/></button>
             </form>
         </div>
         <div class="col-1">
@@ -116,7 +72,7 @@
                 <input type="hidden" name="period" value=""/>
                 <input type="hidden" name="status" value=""/>
                 <input type="hidden" name="sortBy" value=""/>
-                <button type="submit" class="btn btn-outline-warning">Drop filter</button>
+                <button type="submit" class="btn btn-outline-warning"><fmt:message key="report.filter.drop"/></button>
             </form>
         </div>
 
@@ -125,15 +81,15 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">Report id</th>
-                <th scope="col">User full name</th>
-                <th scope="col">IPN</th>
-                <th scope="col">Report date</th>
-                <th scope="col">Year</th>
-                <th scope="col">Period</th>
-                <th scope="col">Comment</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
+                <th scope="col"><fmt:message key="report.report.id"/></th>
+                <th scope="col"><fmt:message key="report.user.fullname"/></th>
+                <th scope="col"><fmt:message key="report.user.ipn"/></th>
+                <th scope="col"><fmt:message key="report.data.col.date"/></th>
+                <th scope="col"><fmt:message key="report.data.col.year"/></th>
+                <th scope="col"><fmt:message key="report.data.col.period"/></th>
+                <th scope="col"><fmt:message key="report.data.col.comment"/></th>
+                <th scope="col"><fmt:message key="report.data.col.status"/></th>
+                <th scope="col"><fmt:message key="report.data.col.action"/></th>
             </tr>
             </thead>
             <tbody>
@@ -141,7 +97,7 @@
                 <td class="text-center" colspan="9">
                     <div>
                         <c:if test="${requestScope.noReportsFound != null}">
-                            <b><c:out value="${requestScope.noReportsFound}"/></b>
+                            <b><fmt:message key="reports.error.not.found"/></b>
                         </c:if>
                     </div>
                 </td>
@@ -156,17 +112,18 @@
                     <td><span><c:out value="${report.userDTO.ipn}"/></span></td>
                     <td><span><c:out value="${report.reportDate}"/></span></td>
                     <td><span><c:out value="${report.year}"/></span></td>
-                    <td><span><c:out value="${report.taxPeriod}"/></span></td>
+                    <td><span><fmt:message key="reports.period.${report.taxPeriod}"/></span></td>
                     <td>
                         <c:if test="${report.comment != null}">
-                        <span>Has comment</span>
+                            <span><fmt:message key="report.has.comment"/></span>
                         </c:if>
-                    <td><span><c:out value="${report.status}"/></span></td>
+                    <td><span><fmt:message key="reports.status.${report.status}"/></span></td>
                     <td>
                         <div>
                             <form action="${pageContext.request.contextPath}/inspector/report-view" method="GET">
                                 <input type="hidden" id="report" name="reportId" value="${report.id}">
-                                <input type="submit" value="View"/>
+                                <input type="submit"
+                                       value="<fmt:message key="reports.action.view"/>"/>
                             </form>
                         </div>
                     </td>

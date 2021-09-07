@@ -26,8 +26,7 @@
                 <label for="date">
                     <fmt:message key="reports.search.select.date"/>
                     <input type="date" id="date" name="date" min="2010-01-01" max="2021-12-31"
-                           value="${sessionScope.date}"
-                    />
+                           value="${sessionScope.date}"/>
                 </label>
                 <select id="period" name="period" class="form-select" aria-label="Default select example">
                     <option selected value=""><fmt:message key="reports.search.select.period"/></option>
@@ -107,7 +106,7 @@
                     <td><span><c:out value="${report.reportDate}"/></span></td>
                     <td>
                         <c:if test="${report.comment != null}">
-                        <span><fmt:message key="report.has.comment"/></span>
+                            <span><fmt:message key="report.has.comment"/></span>
                         </c:if>
                     <td>
                     <td><span><fmt:message key="reports.status.${report.status}"/></span></td>

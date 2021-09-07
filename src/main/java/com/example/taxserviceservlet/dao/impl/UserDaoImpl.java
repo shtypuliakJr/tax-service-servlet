@@ -13,6 +13,16 @@ import java.util.*;
 
 public class UserDaoImpl implements UserDao {
 
+    public static UserDao userDao;
+
+    public static UserDao getInstance() {
+
+        if (userDao == null)
+            userDao = new UserDaoImpl();
+
+        return userDao;
+    }
+
     ObjectMapper<User> mapper = new UserMapper();
 
     @Override

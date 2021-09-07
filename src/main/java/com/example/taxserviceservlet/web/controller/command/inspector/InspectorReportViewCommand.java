@@ -27,7 +27,7 @@ public class InspectorReportViewCommand implements Command {
     }
 
     private String processPostMethod(HttpServletRequest request) {
-
+        //ToDO: edit
         String status = request.getParameter("status");
         String comment = request.getParameter("comment");
         ReportDTO report = (ReportDTO) request.getSession().getAttribute("report");

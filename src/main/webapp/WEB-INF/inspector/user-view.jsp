@@ -7,7 +7,7 @@
     <fmt:setBundle basename="message"/>
 
     <meta charset="UTF-8">
-    <title>Reports</title>
+    <title><fmt:message key="inspector.user.info.title"/></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -15,40 +15,12 @@
 
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    <div class="form-group row">
-        <div class="col-md-5">
-            <form style="display: inline;" action="statistic" method="GET">
-                <button type="submit" class="btn btn-primary">Statistic</button>
-            </form>
-        </div>
-        <div class="col-md-5">
-            <form style="display: inline;" action="reports" method="GET">
-                <button type="submit" class="btn btn-primary">Reports</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="navbar-nav ml-auto">
-        <div class="form-group row">
-            <div class="col-sm-8">
-                <span>Inspector</span>
-                <p><c:out value="${sessionScope.user.email}"/></p>
-            </div>
-            <div class="col-sm-4">
-                <form style="display: inline;" action="${pageContext.request.contextPath}/logout" method="POST">
-                    <input class="btn btn-danger" type="submit" value="Logout"/>
-                </form>
-            </div>
-        </div>
-    </div>
-
-</nav>
+<%@include file="inspector-navbar.html" %>
 
 <div class="container">
     <div style="text-align: center">
-        <h1>User Information</h1>
+        <h1><fmt:message key="inspector.user.info.title"/></h1>
     </div>
     <table class="table table-striped">
         <thead>
@@ -70,31 +42,35 @@
         <tbody>
         <c:if test="${requestScope.userDTO != null}">
         <tr>
-            <td><b>Full name: </b></td>
+            <td><b><fmt:message key="user.info.fullname"/></b></td>
             <td><span>${requestScope.userDTO.firstName} ${requestScope.userDTO.lastName}</span></td>
         </tr>
         <tr>
-            <td><b>Email: </b></td>
+            <td><b><fmt:message key="user.info.email"/></b></td>
             <td><span>${requestScope.userDTO.email}</span></td>
         </tr>
         <tr>
-            <td><b>Age: </b></td>
+            <td><b><fmt:message key="user.info.age"/></b></td>
             <td><span>${requestScope.userDTO.age}</span></td>
         </tr>
         <tr>
-            <td><b>Registration date: </b></td>
+            <td><b><fmt:message key="user.info.registration.date"/></b></td>
             <td><span>${requestScope.userDTO.dateOfRegistration}</span></td>
         </tr>
         <tr>
-            <td><b>IPN: </b></td>
+            <td><b><fmt:message key="user.info.ipn"/></b></td>
             <td><span>${requestScope.userDTO.ipn}</span></td>
         </tr>
         <tr>
-            <td><b>Personality: </b></td>
-            <td><span>${requestScope.userDTO.personality}</span></td>
+            <td><b><fmt:message key="user.info.personality"/></b></td>
+            <td>
+                <span>
+                    <fmt:message key="user.data.dto.personality.name.${requestScope.userDTO.personality}"/>
+                </span>
+            </td>
         </tr>
         <tr>
-            <td><b>Address: </b></td>
+            <td><b><fmt:message key="user.info.address"/></b></td>
             <td><span>${requestScope.userDTO.address}</span></td>
         </tr>
         </tbody>
@@ -104,7 +80,7 @@
         <form action="${pageContext.request.contextPath}/inspector/reports" method="GET">
             <input type="hidden" id="userId" name="userId" value="${requestScope.userDTO.userId}"/>
             <button type="submit" class="btn btn-outline-primary">
-                Show reports
+                <fmt:message key="inspector.user.reports"/>
             </button>
         </form>
     </div>

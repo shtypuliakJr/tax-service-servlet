@@ -23,12 +23,15 @@ import java.util.stream.Collectors;
 public class ReportService {
 
     ReportDao reportDao = new ReportDaoImpl();
+    UserDao userDao = UserDaoImpl.getInstance();
 
     private static ReportService reportService;
 
     public static synchronized ReportService getInstance() {
+
         if (reportService == null)
             reportService = new ReportService();
+
         return reportService;
     }
 
@@ -50,14 +53,13 @@ public class ReportService {
     public ReportDTO getReportById(Long reportId) {
 
         Optional<Report> report = reportDao.findById(reportId);
-        UserDao userDao = new UserDaoImpl();
+        ReportDTO reportDTO = null;
 
         if (report.isPresent()) {
-            Optional<User> byId = userDao.findById(report.get().getUserId());
-            report.get().setUser(byId.get());
+            Optional<User> user = userDao.findById(report.get().getUserId());
+            reportDTO = PojoUtil.convertReportEntityToDTO(report.get(), user.get());
         }
-
-        return PojoUtil.convertReportEntityToDTO(report.get());
+        return reportDTO;
     }
 
     public boolean deleteReportById(long reportId) {
@@ -75,19 +77,6 @@ public class ReportService {
     }
 
     public ReportDTO updateEditedReport(ReportDTO reportDTO) {
-
-//        System.out.println(reportDTO);
-//
-//        Optional<Report> report = reportDao.findById(reportDTO.getId());
-//
-//        Report editedReport = report.map((rep) -> {
-//            rep.setStatus(Status.PROCESSING);
-//            rep.setIncome(reportDTO.getIncome());
-//            rep.setTaxRate(reportDTO.getTaxRate());
-//            rep.setTaxPeriod(TaxPeriod.valueOf(reportDTO.getTaxPeriod()));
-//            rep.setYear(reportDTO.getYear());
-//            return rep;
-//        }).get();
 
         reportDao.update(PojoUtil.convertReportDTOToEntity(reportDTO));
 
