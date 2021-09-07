@@ -1,18 +1,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fmr" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: shtypuliak_r
-  Date: 8/28/21
-  Time: 10:44 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="message"/>
-    <fmt:setLocale value="${param.lang}"/>
 
     <title><fmt:message key="login.login"/></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
@@ -20,19 +13,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 </head>
 <body class="h-100">
-<%--<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->--%>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-<%--<!--&lt;!&ndash;    <div class="navbar-nav ml-auto">&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;        <div class="form-group row">&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;            <div class="col-md-5">&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;                <a th:href="@{?lang=en}" th:text="#{lang.en}"></a>&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;            </div>&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;            <div class="col-md-5">&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;                <a th:href="@{?lang=ua}" th:text="#{lang.ua}"></a>&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;            </div>&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;        </div>&ndash;&gt;-->--%>
-<%--<!--&lt;!&ndash;    </div>&ndash;&gt;-->--%>
-<%--<!--</nav>-->--%>
+    <div class="navbar-nav ml-auto">
+        <div class="form-group row">
+            <div class="col-md-5">
+                <a href="?lang=en">
+                    <fmt:message key="lang.en"/>
+                </a>
+            </div>
+            <div class="col-md-5">
+                <a href="?lang=ua">
+                    <fmt:message key="lang.ua"/>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-10 col-md-8 col-lg-6">

@@ -92,7 +92,7 @@
                 <td class="text-center" colspan="9">
                     <div>
                         <c:if test="${requestScope.noReportsFoundException != null}">
-                            <b><c:out value="${requestScope.noReportsFoundException}"/></b>
+                            <b><fmt:message key="reports.error.not.found"/></b>
                         </c:if>
                     </div>
                 </td>

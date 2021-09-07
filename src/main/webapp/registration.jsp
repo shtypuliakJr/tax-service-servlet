@@ -3,8 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="message"/>
-    <fmt:setLocale value="${param.lang}"/>
 
     <meta charset="UTF-8">
     <title><fmt:message key="registration.registration"/></title>

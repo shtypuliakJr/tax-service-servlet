@@ -70,9 +70,9 @@
             <input type="hidden" id="reportId" name="reportId" value="${report.id}">
             <div class="form-group">
                 <label for="comment"><fmt:message key="report.data.col.comment"/></label>
-                <textarea id="comment" name="comment" class="form-control rounded-0" rows="3">
-                    ${report.comment}
-                </textarea>
+                <input type="text" id="comment" name="comment" value="${report.comment}"
+                       class="form-control rounded-0"/>
+
             </div>
             <div>
                 <select id="status" name="status">
