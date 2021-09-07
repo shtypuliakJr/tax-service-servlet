@@ -52,8 +52,9 @@ public class UserReportEditCommand implements Command {
         initialReport.setStatus(String.valueOf(Status.PROCESSING));
         initialReport.setTaxPeriod(reportDTO.getTaxPeriod());
         initialReport.setYear(reportDTO.getYear());
-
-        reportService.updateEditedReport(reportDTO);
+        System.out.println(initialReport);
+        System.out.println(reportDTO);
+        reportService.updateEditedReport(initialReport);
 
         session.removeAttribute("reportById");
 

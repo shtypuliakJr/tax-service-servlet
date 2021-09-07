@@ -1,10 +1,14 @@
 <%@ page import="com.example.taxserviceservlet.entity.TaxPeriod" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="message"/>
+
     <meta charset="UTF-8">
-    <title>Report form</title>
+    <title><fmt:message key="user.report.form.title"/></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -19,31 +23,19 @@
         <div class="col-10 col-md-4">
             <div class="container alert alert-primary">
                 <div style="text-align: center">
-                    <h1>Report form</h1>
+                    <h1><fmt:message key="user.report.form.form"/></h1>
                 </div>
                 <div>
                     <form action="${pageContext.request.contextPath}/user/report-form" method="POST">
                         <div class="form-group">
-                            <label for="income">Income:</label>
+                            <label for="income"><fmt:message key="user.report.income"/></label>
                             <input type="text" id="income" name="income" class="form-control"
                                    value="${param.get('income')}" required/>
                             <c:if test="${requestScope.fields.hasErrors('isIncomeInvalid')}">
                                 <div class="alert alert-error">
                                     <div class="alert alert-danger" role="alert">
-                                        <div style="text-align: center" class="error-invalid">Invalid income value</div>
-                                    </div>
-                                </div>
-                            </c:if>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="taxRate">Tax rate, %:</label>
-                            <input type="text" id="taxRate" name="taxRate" class="form-control"
-                                   value="${param.get('taxRate')}" required/>
-                            <c:if test="${requestScope.fields.hasErrors('isTaxRateInvalid')}">
-                                <div class="alert alert-error">
-                                    <div class="alert alert-danger" role="alert">
-                                        <div style="text-align: center" class="error-invalid">Invalid tax rate value
+                                        <div style="text-align: center" class="error-invalid">
+                                            <fmt:message key="report.invalid.income"/>
                                         </div>
                                     </div>
                                 </div>
@@ -51,12 +43,27 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="period">Tax period: </label>
+                            <label for="taxRate"><fmt:message key="user.report.rate"/>, %:</label>
+                            <input type="text" id="taxRate" name="taxRate" class="form-control"
+                                   value="${param.get('taxRate')}" required/>
+                            <c:if test="${requestScope.fields.hasErrors('isTaxRateInvalid')}">
+                                <div class="alert alert-error">
+                                    <div class="alert alert-danger" role="alert">
+                                        <div style="text-align: center" class="error-invalid">
+                                            <fmt:message key="report.invalid.rate"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="period"><fmt:message key="user.report.period"/>: </label>
 
                             <select id="period" name="period" class="form-select" aria-label="Default select example">
-                                <option selected value="">Select period</option>
+                                <option selected value=""><fmt:message key="reports.search.select.period"/></option>
                                 <c:forEach var="period" items="${TaxPeriod.values()}">
-                                    <option label="${period}"
+                                    <option label="<fmt:message key="reports.period.${period}"/>"
                                             value="${period}"<c:if test="${period == param.get('period')}">
                                         selected </c:if>>
                                         ..
@@ -66,20 +73,24 @@
                             <c:if test="${requestScope.fields.hasErrors('isPeriodInvalid')}">
                                 <div class="alert alert-error">
                                     <div class="alert alert-danger" role="alert">
-                                        <div style="text-align: center" class="error-invalid">Invalid period</div>
+                                        <div style="text-align: center" class="error-invalid">
+                                            <fmt:message key="report.invalid.period"/>
+                                        </div>
                                     </div>
                                 </div>
                             </c:if>
                         </div>
 
                         <div class="form-group">
-                            <label for="year">Year:</label>
+                            <label for="year"><fmt:message key="user.report.year"/>:</label>
                             <input type="text" id="year" name="year" class="form-control"
                                    value="${param.get('year')}" required/>
                             <c:if test="${requestScope.fields.hasErrors('isYearInvalid')}">
                                 <div class="alert alert-error">
                                     <div class="alert alert-danger" role="alert">
-                                        <div style="text-align: center" class="error-invalid">Invalid year value</div>
+                                        <div style="text-align: center" class="error-invalid">
+                                            <fmt:message key="report.invalid.year"/>
+                                        </div>
                                     </div>
                                 </div>
                             </c:if>
@@ -87,7 +98,8 @@
 
                         <div class="form-group">
                             <div style="text-align: center">
-                                <input type="submit" class="btn btn-primary center-block" value="Apply"/>
+                                <input type="submit" class="btn btn-primary center-block"
+                                       value="<fmt:message key="user.report.form.apply"/>"/>
                             </div>
                         </div>
                     </form>
