@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Error 403</title>
+    <title>Error 500</title>
 </head>
 <body>
 <div>
-    <b>Error 403. Permission denied</b>
+    <b>Error 500. Internal server error</b>
 </div>
 </body>
 </html>

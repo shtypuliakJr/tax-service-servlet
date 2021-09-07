@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class InspectorUserViewCommand implements Command {
 
-    UserService userService = UserService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -13,7 +13,7 @@ import java.sql.Date;
 
 public class InspectorReportsCommand implements Command {
 
-    InspectorService inspectorService = InspectorService.getInstance();
+    private final InspectorService inspectorService = InspectorService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -1,5 +1,6 @@
 package com.example.taxserviceservlet.service;
 
+import com.example.taxserviceservlet.dao.DaoFactory;
 import com.example.taxserviceservlet.dao.UserDao;
 import com.example.taxserviceservlet.dao.impl.UserDaoImpl;
 import com.example.taxserviceservlet.entity.User;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 
 public class RegistrationService {
 
-    private UserDao userDao = new UserDaoImpl();
+    private final UserDao userDao = DaoFactory.getUserDaoInstance();
 
     private static RegistrationService registrationService;
 

@@ -6,7 +6,6 @@ import com.example.taxserviceservlet.exception.NoUserFoundException;
 import com.example.taxserviceservlet.exception.WrongPasswordException;
 import com.example.taxserviceservlet.service.UserService;
 import com.example.taxserviceservlet.web.controller.command.Command;
-import com.example.taxserviceservlet.web.controller.command.CommandUtility;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,7 +29,6 @@ public class LoginCommand implements Command {
 
             User user = userService.checkUserPrincipal(email, password);
             session.setAttribute("user", user);
-            CommandUtility.addUserToUserContext(user);
 
             if (user.getUserRole().equals(UserRole.USER))
                 return "redirect:/user/reports";

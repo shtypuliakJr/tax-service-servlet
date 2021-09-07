@@ -1,5 +1,6 @@
 package com.example.taxserviceservlet.service;
 
+import com.example.taxserviceservlet.dao.DaoFactory;
 import com.example.taxserviceservlet.dao.ReportDao;
 import com.example.taxserviceservlet.dao.UserDao;
 import com.example.taxserviceservlet.dao.impl.ReportDaoImpl;
@@ -21,8 +22,8 @@ import java.util.stream.Collectors;
 
 public class InspectorService {
 
-    ReportDao reportDao = new ReportDaoImpl();
-    UserDao userDao = new UserDaoImpl();
+    private final ReportDao reportDao = DaoFactory.getReportDaoInstance();
+    private final UserDao userDao = DaoFactory.getUserDaoInstance();
 
     private static InspectorService inspectorService;
 
@@ -49,10 +50,6 @@ public class InspectorService {
                 .collect(Collectors.toList());
     }
 
-    public List<ReportDTO> getReportsBySearchParam() {
-        return null;
-    }
-
     public StatisticDTO getStatisticData() {
 
         Map<String, Long> statisticDataReportsCount = reportDao.getStatisticDataReportsCount();
@@ -77,7 +74,7 @@ public class InspectorService {
         if (status == null || status.isEmpty())
             throw new ReportStatusException("Require status");
 
-        if (Status.valueOf(status).equals(Status.DISAPPROVED) && comment == null)
+        if (Status.valueOf(status).equals(Status.DISAPPROVED) && comment.isEmpty())
             throw new ReportStatusException("Require comment");
 
         reportDTO.setComment(comment.trim());

@@ -1,5 +1,6 @@
 package com.example.taxserviceservlet.service;
 
+import com.example.taxserviceservlet.dao.DaoFactory;
 import com.example.taxserviceservlet.dao.ReportDao;
 import com.example.taxserviceservlet.dao.UserDao;
 import com.example.taxserviceservlet.dao.impl.ReportDaoImpl;
@@ -22,8 +23,8 @@ import java.util.stream.Collectors;
 
 public class ReportService {
 
-    ReportDao reportDao = new ReportDaoImpl();
-    UserDao userDao = UserDaoImpl.getInstance();
+    private final ReportDao reportDao = DaoFactory.getReportDaoInstance();
+    private final UserDao userDao = DaoFactory.getUserDaoInstance();
 
     private static ReportService reportService;
 

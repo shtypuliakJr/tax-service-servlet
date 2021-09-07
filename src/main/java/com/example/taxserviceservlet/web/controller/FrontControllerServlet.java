@@ -61,7 +61,7 @@ public class FrontControllerServlet extends HttpServlet {
 
         String path = request.getRequestURI().replaceFirst("/", "");
         Command command = commands.getOrDefault(path.trim(), (c) -> "/error/error404");
-        String page = "/error/error";
+        String page = "/error/error500";
 
         try {
             page = command.execute(request);

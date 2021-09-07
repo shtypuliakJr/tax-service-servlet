@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class RegistrationCommand implements Command {
 
-    RegistrationService registrationService = RegistrationService.getInstance();
+    private final RegistrationService registrationService = RegistrationService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request) {
